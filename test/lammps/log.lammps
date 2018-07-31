@@ -1,0 +1,84 @@
+LAMMPS (16 Feb 2016)
+# INITIALISATION
+
+units metal
+pair_style eam/alloy
+
+#defaults
+dimension 3
+boundary p p p
+atom_style atomic
+
+# ATOM DEFINITION
+
+lattice fcc 3.615
+Lattice spacing in x,y,z = 3.615 3.615 3.615
+
+variable x equal 20
+variable y equal 20
+variable z equal 20
+
+region simbox block 0 $x 0 $y 0 $z
+region simbox block 0 20 0 $y 0 $z
+region simbox block 0 20 0 20 0 $z
+region simbox block 0 20 0 20 0 20
+create_box 1 simbox
+Created orthogonal box = (0 0 0) to (72.3 72.3 72.3)
+  2 by 3 by 4 MPI processor grid
+create_atoms 1 box
+Created 32000 atoms
+
+# SETTINGS
+
+pair_coeff * * /data/ashley/wills_thesis/cu_potential/cuMishinAlloy Cu
+velocity all create 300.0 62974 dist gaussian
+fix 1 all nvt temp 300.0 300.0 0.1
+
+dump myDump all atom 10000 uncompressed_300K.atom
+
+#defaults
+timestep 0.001
+
+# RUN
+
+# thermalisng for 10 ps
+run 10000
+Neighbor list info ...
+  1 neighbor list requests
+  update every 1 steps, delay 10 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.50679
+  ghost atom cutoff = 7.50679
+  binsize = 3.75339 -> bins = 20 20 20
+Memory usage per processor = 4.0113 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+       0          300   -113323.79            0   -112082.93    3420.9715 
+   10000     300.7754   -112096.85            0   -110852.78    19141.509 
+Loop time of 57.6163 on 24 procs for 10000 steps with 32000 atoms
+
+Performance: 14.996 ns/day, 1.600 hours/ns, 173.562 timesteps/s
+99.9% CPU use with 24 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 37.562     | 40.724     | 50.624     |  43.3 | 70.68
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 6.033      | 15.933     | 18.984     |  68.8 | 27.65
+Output  | 0.0038681  | 0.0038718  | 0.003881   |   0.0 |  0.01
+Modify  | 0.51484    | 0.60717    | 0.70457    |   8.6 |  1.05
+Other   |            | 0.3488     |            |       |  0.61
+
+Nlocal:    1333.33 ave 1540 max 1170 min
+Histogram: 4 0 2 8 0 0 4 4 0 2
+Nghost:    4636 ave 4891 max 4356 min
+Histogram: 2 0 4 2 2 6 0 4 2 2
+Neighs:    93333.3 ave 108878 max 83202 min
+Histogram: 4 0 10 0 1 3 1 3 0 2
+
+Total # of neighbors = 2240000
+Ave neighs/atom = 70
+Neighbor list builds = 0
+Dangerous builds = 0
+
+Total wall time: 0:00:57

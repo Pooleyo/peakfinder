@@ -1,0 +1,12 @@
+VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME -1-1-1
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX -1.05 -0.95 3
+SET_KY -1.05 -0.95 3
+SET_KZ -1.05 -0.95 3

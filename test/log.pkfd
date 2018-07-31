@@ -1,0 +1,567 @@
+2018-07-31 15:56:42,551		initialise.py		run
+	 Peakfinder intialised.
+
+2018-07-31 15:56:42,729		path_1_stat.py		run
+	 Path path_1_stat started.
+
+2018-07-31 15:56:42,729		select_peak_positions.py		run
+	 Brick select_peak_positions started.
+
+2018-07-31 15:56:42,793		units.py		build_all_k_values
+	 [[-1, -1, -1], [-1, -1, 0], [-1, -1, 1], [-1, 0, -1], [-1, 0, 0], [-1, 0, 1], [-1, 1, -1], [-1, 1, 0], [-1, 1, 1], [0, -1, -1], [0, -1, 0], [0, -1, 1], [0, 0, -1], [0, 0, 0], [0, 0, 1], [0, 1, -1], [0, 1, 0], [0, 1, 1], [1, -1, -1], [1, -1, 0], [1, -1, 1], [1, 0, -1], [1, 0, 0], [1, 0, 1], [1, 1, -1], [1, 1, 0], [1, 1, 1]]
+2018-07-31 15:56:42,793		units.py		remove_fcc_forbidden_reflections
+	 [[-1, -1, -1], [-1, -1, 1], [-1, 1, -1], [-1, 1, 1], [0, 0, 0], [1, -1, -1], [1, -1, 1], [1, 1, -1], [1, 1, 1]]
+2018-07-31 15:56:42,793		units.py		get_gsqr_values
+	 [3, 3, 3, 3, 0, 3, 3, 3, 3]
+2018-07-31 15:56:42,793		select_peak_positions.py		run
+	 Brick select_peak_positions finished.
+
+2018-07-31 15:56:42,793		build_datafile_structure.py		run
+	 Brick build_datafile_structure started.
+
+2018-07-31 15:56:42,793		units.py		build_datafile_structure
+	 ['-1-1-1', '-1-11', '-11-1', '-111', '000', '1-1-1', '1-11', '11-1', '111']
+2018-07-31 15:56:42,794		build_datafile_structure.py		run
+	 Brick build_datafile_structure finished.
+
+2018-07-31 15:56:42,794		use_soh_for_3DFT.py		run
+	 Brick use_soh_for_3DFT started.
+
+2018-07-31 15:56:42,794		units.py		calc_k_offset_with_N_atoms
+	 [0.05, 0.05, 0.05]
+2018-07-31 15:56:42,794		units.py		find_k_start
+	 [-1.05, -1.05, -1.05]
+2018-07-31 15:56:42,794		units.py		find_k_stop
+	 [-0.95, -0.95, -0.95]
+2018-07-31 15:56:42,794		units.py		make_peak_str
+	 -1-1-1
+2018-07-31 15:56:42,794		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-1-1/-1-1-1.in
+2018-07-31 15:56:42,794		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME -1-1-1
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX -1.05 -0.95 3
+SET_KY -1.05 -0.95 3
+SET_KZ -1.05 -0.95 3
+
+2018-07-31 15:56:42,794		units.py		find_k_start
+	 [-1.05, -1.05, 0.95]
+2018-07-31 15:56:42,794		units.py		find_k_stop
+	 [-0.95, -0.95, 1.05]
+2018-07-31 15:56:42,794		units.py		make_peak_str
+	 -1-11
+2018-07-31 15:56:42,794		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-11/-1-11.in
+2018-07-31 15:56:42,794		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME -1-11
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX -1.05 -0.95 3
+SET_KY -1.05 -0.95 3
+SET_KZ 0.95 1.05 3
+
+2018-07-31 15:56:42,794		units.py		find_k_start
+	 [-1.05, 0.95, -1.05]
+2018-07-31 15:56:42,794		units.py		find_k_stop
+	 [-0.95, 1.05, -0.95]
+2018-07-31 15:56:42,794		units.py		make_peak_str
+	 -11-1
+2018-07-31 15:56:42,794		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-11-1/-11-1.in
+2018-07-31 15:56:42,795		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME -11-1
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX -1.05 -0.95 3
+SET_KY 0.95 1.05 3
+SET_KZ -1.05 -0.95 3
+
+2018-07-31 15:56:42,795		units.py		find_k_start
+	 [-1.05, 0.95, 0.95]
+2018-07-31 15:56:42,795		units.py		find_k_stop
+	 [-0.95, 1.05, 1.05]
+2018-07-31 15:56:42,795		units.py		make_peak_str
+	 -111
+2018-07-31 15:56:42,795		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-111/-111.in
+2018-07-31 15:56:42,795		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME -111
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX -1.05 -0.95 3
+SET_KY 0.95 1.05 3
+SET_KZ 0.95 1.05 3
+
+2018-07-31 15:56:42,795		units.py		find_k_start
+	 [-0.05, -0.05, -0.05]
+2018-07-31 15:56:42,795		units.py		find_k_stop
+	 [0.05, 0.05, 0.05]
+2018-07-31 15:56:42,795		units.py		make_peak_str
+	 000
+2018-07-31 15:56:42,795		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/000/000.in
+2018-07-31 15:56:42,795		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME 000
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX -0.05 0.05 3
+SET_KY -0.05 0.05 3
+SET_KZ -0.05 0.05 3
+
+2018-07-31 15:56:42,795		units.py		find_k_start
+	 [0.95, -1.05, -1.05]
+2018-07-31 15:56:42,795		units.py		find_k_stop
+	 [1.05, -0.95, -0.95]
+2018-07-31 15:56:42,795		units.py		make_peak_str
+	 1-1-1
+2018-07-31 15:56:42,795		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-1-1/1-1-1.in
+2018-07-31 15:56:42,795		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME 1-1-1
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX 0.95 1.05 3
+SET_KY -1.05 -0.95 3
+SET_KZ -1.05 -0.95 3
+
+2018-07-31 15:56:42,795		units.py		find_k_start
+	 [0.95, -1.05, 0.95]
+2018-07-31 15:56:42,796		units.py		find_k_stop
+	 [1.05, -0.95, 1.05]
+2018-07-31 15:56:42,796		units.py		make_peak_str
+	 1-11
+2018-07-31 15:56:42,796		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-11/1-11.in
+2018-07-31 15:56:42,796		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME 1-11
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX 0.95 1.05 3
+SET_KY -1.05 -0.95 3
+SET_KZ 0.95 1.05 3
+
+2018-07-31 15:56:42,796		units.py		find_k_start
+	 [0.95, 0.95, -1.05]
+2018-07-31 15:56:42,796		units.py		find_k_stop
+	 [1.05, 1.05, -0.95]
+2018-07-31 15:56:42,796		units.py		make_peak_str
+	 11-1
+2018-07-31 15:56:42,796		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/11-1/11-1.in
+2018-07-31 15:56:42,796		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME 11-1
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX 0.95 1.05 3
+SET_KY 0.95 1.05 3
+SET_KZ -1.05 -0.95 3
+
+2018-07-31 15:56:42,796		units.py		find_k_start
+	 [0.95, 0.95, 0.95]
+2018-07-31 15:56:42,796		units.py		find_k_stop
+	 [1.05, 1.05, 1.05]
+2018-07-31 15:56:42,796		units.py		make_peak_str
+	 111
+2018-07-31 15:56:42,796		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/111/111.in
+2018-07-31 15:56:42,796		units.py		write_soh_input_3DFT
+	 VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /data/ashley/peakfinder_code/v3/peakfinder/test/lammps/uncompressed_300K.atom
+APPEND_FILE_NAME 111
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.615
+CALC_3D_FT
+SET_KX 0.95 1.05 3
+SET_KY 0.95 1.05 3
+SET_KZ 0.95 1.05 3
+
+2018-07-31 15:56:42,796		units.py		make_peak_str
+	 -1-1-1
+2018-07-31 15:56:42,796		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-1-1/-1-1-1.in
+2018-07-31 15:56:43,223		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-1-1/-1-1-1.in
+2018-07-31 15:56:43,224		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.-1-1-1.ft moved to ./data/-1-1-1/
+2018-07-31 15:56:43,224		units.py		make_peak_str
+	 -1-11
+2018-07-31 15:56:43,224		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-11/-1-11.in
+2018-07-31 15:56:43,525		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-11/-1-11.in
+2018-07-31 15:56:43,525		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.-1-11.ft moved to ./data/-1-11/
+2018-07-31 15:56:43,526		units.py		make_peak_str
+	 -11-1
+2018-07-31 15:56:43,526		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-11-1/-11-1.in
+2018-07-31 15:56:43,847		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/-11-1/-11-1.in
+2018-07-31 15:56:43,848		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.-11-1.ft moved to ./data/-11-1/
+2018-07-31 15:56:43,848		units.py		make_peak_str
+	 -111
+2018-07-31 15:56:43,848		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-111/-111.in
+2018-07-31 15:56:44,117		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/-111/-111.in
+2018-07-31 15:56:44,117		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.-111.ft moved to ./data/-111/
+2018-07-31 15:56:44,118		units.py		make_peak_str
+	 000
+2018-07-31 15:56:44,118		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/000/000.in
+2018-07-31 15:56:44,467		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/000/000.in
+2018-07-31 15:56:44,467		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.000.ft moved to ./data/000/
+2018-07-31 15:56:44,467		units.py		make_peak_str
+	 1-1-1
+2018-07-31 15:56:44,468		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-1-1/1-1-1.in
+2018-07-31 15:56:44,765		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-1-1/1-1-1.in
+2018-07-31 15:56:44,765		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.1-1-1.ft moved to ./data/1-1-1/
+2018-07-31 15:56:44,765		units.py		make_peak_str
+	 1-11
+2018-07-31 15:56:44,765		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-11/1-11.in
+2018-07-31 15:56:45,086		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-11/1-11.in
+2018-07-31 15:56:45,086		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.1-11.ft moved to ./data/1-11/
+2018-07-31 15:56:45,086		units.py		make_peak_str
+	 11-1
+2018-07-31 15:56:45,086		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/11-1/11-1.in
+2018-07-31 15:56:45,518		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/11-1/11-1.in
+2018-07-31 15:56:45,519		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.11-1.ft moved to ./data/11-1/
+2018-07-31 15:56:45,519		units.py		make_peak_str
+	 111
+2018-07-31 15:56:45,519		units.py		determine_soh_input_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/111/111.in
+2018-07-31 15:56:45,810		units.py		run_soh
+	 sonOfHoward called using input file at /data/ashley/peakfinder_code/v3/peakfinder/test/data/111/111.in
+2018-07-31 15:56:45,810		units.py		move_soh_output_to_peak_folder
+	 ./lammps/uncompressed_300K.atom.10000.111.ft moved to ./data/111/
+2018-07-31 15:56:45,810		use_soh_for_3DFT.py		run
+	 Brick use_soh_for_3DFT finished.
+
+2018-07-31 15:56:45,811		calc_peak_intensities.py		run
+	 Brick calc_peak_intensities started.
+
+2018-07-31 15:56:45,811		units.py		make_peak_str
+	 -1-1-1
+2018-07-31 15:56:45,811		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-1-1/uncompressed_300K.atom.10000.-1-1-1.ft
+2018-07-31 15:56:45,811		units.py		read_from_soh_output
+	 [array([-1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05,
+       -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  ,
+       -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95]), array([-1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95]), array([-1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95]), array([  1.23898262e+02,   2.16597906e+05,   9.54669062e+04,
+         4.22471328e+04,   1.46894422e+05,   3.41955781e+04,
+         1.49745125e+05,   5.48056953e+04,   1.44725859e+05,
+         3.10897012e+04,   1.54739678e+04,   9.87781875e+04,
+         4.25401797e+04,   9.65219392e+08,   4.03098906e+04,
+         1.15469227e+05,   1.76308516e+04,   3.01249531e+04,
+         1.23087055e+05,   5.14662891e+04,   1.50152875e+05,
+         3.47826484e+04,   9.49900938e+04,   4.99654219e+04,
+         9.01484062e+04,   1.92361859e+05,   2.01837433e+02])]
+2018-07-31 15:56:45,814		units.py		find_point_of_max_height
+	 [-1.0, -1.0, -1.0]
+2018-07-31 15:56:45,814		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,814		units.py		calc_integrated_intensity
+	 120910.345996
+2018-07-31 15:56:45,814		units.py		make_peak_str
+	 -1-11
+2018-07-31 15:56:45,814		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-1-11/uncompressed_300K.atom.10000.-1-11.ft
+2018-07-31 15:56:45,814		units.py		read_from_soh_output
+	 [array([-1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05,
+       -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  ,
+       -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95]), array([-1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95]), array([ 0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05]), array([  1.47102910e+04,   1.46069891e+05,   5.85931397e+03,
+         3.46192594e+05,   9.26735312e+04,   1.82879863e+04,
+         1.02307949e+04,   6.58950703e+04,   2.66173496e+04,
+         4.22481172e+04,   2.40242090e+04,   3.28628789e+04,
+         4.82664111e+03,   9.65866112e+08,   5.42464893e+03,
+         3.22893594e+04,   3.02414453e+04,   5.31067734e+04,
+         3.21873086e+04,   5.71836875e+04,   1.27665928e+04,
+         1.26985801e+04,   8.43430547e+04,   3.37653562e+05,
+         2.11608301e+03,   1.32764188e+05,   1.19909180e+04])]
+2018-07-31 15:56:45,817		units.py		find_point_of_max_height
+	 [-1.0, -1.0, 1.0]
+2018-07-31 15:56:45,817		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,817		units.py		calc_integrated_intensity
+	 120937.672109
+2018-07-31 15:56:45,817		units.py		make_peak_str
+	 -11-1
+2018-07-31 15:56:45,817		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-11-1/uncompressed_300K.atom.10000.-11-1.ft
+2018-07-31 15:56:45,817		units.py		read_from_soh_output
+	 [array([-1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05,
+       -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  ,
+       -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95]), array([ 0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05]), array([-1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95]), array([  4.03372812e+04,   9.96239062e+04,   6.52123486e+03,
+         1.25711453e+05,   5.63247070e+04,   1.53039023e+04,
+         9.17232715e+03,   6.02202734e+04,   6.37961797e+04,
+         2.47826281e+05,   1.52072324e+04,   3.56775703e+04,
+         1.76386621e+04,   9.66847744e+08,   1.26872227e+04,
+         2.87062910e+04,   1.84741914e+04,   2.28987438e+05,
+         5.97400000e+04,   5.18015156e+04,   5.13148535e+03,
+         6.22414307e+03,   4.72300898e+04,   1.19919117e+05,
+         7.37915088e+03,   7.94250938e+04,   3.68865977e+04])]
+2018-07-31 15:56:45,820		units.py		find_point_of_max_height
+	 [-1.0, 1.0, -1.0]
+2018-07-31 15:56:45,820		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,820		units.py		calc_integrated_intensity
+	 121042.962168
+2018-07-31 15:56:45,820		units.py		make_peak_str
+	 -111
+2018-07-31 15:56:45,820		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/-111/uncompressed_300K.atom.10000.-111.ft
+2018-07-31 15:56:45,820		units.py		read_from_soh_output
+	 [array([-1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05, -1.05,
+       -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  , -1.  ,
+       -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95, -0.95]), array([ 0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05]), array([ 0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05]), array([  7.29960254e+03,   9.34166641e+04,   3.94807773e+04,
+         5.12270391e+04,   4.06025312e+04,   1.41146766e+05,
+         1.24399172e+05,   3.66054248e+03,   8.23884766e+03,
+         1.36313096e+04,   6.57103672e+04,   2.15888438e+05,
+         1.72597510e+03,   9.66188224e+08,   2.31926294e+03,
+         2.06671344e+05,   5.73371953e+04,   7.36715869e+03,
+         9.13407617e+03,   3.54206982e+03,   1.43568172e+05,
+         1.35198375e+05,   1.46651494e+04,   3.96775625e+04,
+         3.50382109e+04,   9.01664922e+04,   1.13043252e+04])]
+2018-07-31 15:56:45,822		units.py		find_point_of_max_height
+	 [-1.0, 1.0, 1.0]
+2018-07-31 15:56:45,823		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,823		units.py		calc_integrated_intensity
+	 120968.830178
+2018-07-31 15:56:45,823		units.py		make_peak_str
+	 000
+2018-07-31 15:56:45,823		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/000/uncompressed_300K.atom.10000.000.ft
+2018-07-31 15:56:45,823		units.py		read_from_soh_output
+	 [array([-0.05, -0.05, -0.05, -0.05, -0.05, -0.05, -0.05, -0.05, -0.05,
+        0.  ,  0.  ,  0.  ,  0.  ,  0.  ,  0.  ,  0.  ,  0.  ,  0.  ,
+        0.05,  0.05,  0.05,  0.05,  0.05,  0.05,  0.05,  0.05,  0.05]), array([-0.05, -0.05, -0.05,  0.  ,  0.  ,  0.  ,  0.05,  0.05,  0.05,
+       -0.05, -0.05, -0.05,  0.  ,  0.  ,  0.  ,  0.05,  0.05,  0.05,
+       -0.05, -0.05, -0.05,  0.  ,  0.  ,  0.  ,  0.05,  0.05,  0.05]), array([-0.05,  0.  ,  0.05, -0.05,  0.  ,  0.05, -0.05,  0.  ,  0.05,
+       -0.05,  0.  ,  0.05, -0.05,  0.  ,  0.05, -0.05,  0.  ,  0.05,
+       -0.05,  0.  ,  0.05, -0.05,  0.  ,  0.05, -0.05,  0.  ,  0.05]), array([  4.58924000e-01,   3.12016968e+02,   9.14781000e+00,
+         4.40453300e+01,   1.62799500e+02,   1.59449310e+02,
+         1.81818160e+01,   4.35122220e+01,   2.31942520e+01,
+         3.49582800e+00,   4.85085000e+00,   4.90969240e+01,
+         1.69862160e+01,   1.02400000e+09,   1.69803200e+01,
+         4.91055070e+01,   4.84382400e+00,   3.49490500e+00,
+         2.31839030e+01,   4.34998660e+01,   1.81850110e+01,
+         1.59452530e+02,   1.62789841e+02,   4.40415950e+01,
+         9.14759600e+00,   3.12007233e+02,   4.58784000e-01])]
+2018-07-31 15:56:45,825		units.py		find_point_of_max_height
+	 [0.0, 0.0, 0.0]
+2018-07-31 15:56:45,825		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,825		units.py		calc_integrated_intensity
+	 128000.211803
+2018-07-31 15:56:45,826		units.py		make_peak_str
+	 1-1-1
+2018-07-31 15:56:45,826		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-1-1/uncompressed_300K.atom.10000.1-1-1.ft
+2018-07-31 15:56:45,826		units.py		read_from_soh_output
+	 [array([ 0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,
+        1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,
+        1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05]), array([-1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95]), array([-1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95]), array([  1.13039814e+04,   9.01670703e+04,   3.50379219e+04,
+         3.96778750e+04,   1.46653027e+04,   1.35198812e+05,
+         1.43568562e+05,   3.54210156e+03,   9.13421191e+03,
+         7.36713867e+03,   5.73380000e+04,   2.06672719e+05,
+         2.31911035e+03,   9.66188224e+08,   1.72598315e+03,
+         2.15889234e+05,   6.57100859e+04,   1.36315078e+04,
+         8.23884570e+03,   3.66048731e+03,   1.24398328e+05,
+         1.41147328e+05,   4.06025938e+04,   5.12268789e+04,
+         3.94806484e+04,   9.34159297e+04,   7.29960107e+03])]
+2018-07-31 15:56:45,828		units.py		find_point_of_max_height
+	 [1.0, -1.0, -1.0]
+2018-07-31 15:56:45,828		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,828		units.py		calc_integrated_intensity
+	 120968.830533
+2018-07-31 15:56:45,828		units.py		make_peak_str
+	 1-11
+2018-07-31 15:56:45,828		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/1-11/uncompressed_300K.atom.10000.1-11.ft
+2018-07-31 15:56:45,829		units.py		read_from_soh_output
+	 [array([ 0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,
+        1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,
+        1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05]), array([-1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95,
+       -1.05, -1.05, -1.05, -1.  , -1.  , -1.  , -0.95, -0.95, -0.95]), array([ 0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05]), array([  3.68867227e+04,   7.94258906e+04,   7.37927588e+03,
+         1.19919125e+05,   4.72304219e+04,   6.22387793e+03,
+         5.13153760e+03,   5.18021016e+04,   5.97399766e+04,
+         2.28986859e+05,   1.84742949e+04,   2.87059512e+04,
+         1.26870869e+04,   9.66847872e+08,   1.76388320e+04,
+         3.56771641e+04,   1.52073418e+04,   2.47826031e+05,
+         6.37967188e+04,   6.02209922e+04,   9.17225781e+03,
+         1.53041553e+04,   5.63248477e+04,   1.25711453e+05,
+         6.52153906e+03,   9.96240391e+04,   4.03371523e+04])]
+2018-07-31 15:56:45,831		units.py		find_point_of_max_height
+	 [1.0, -1.0, 1.0]
+2018-07-31 15:56:45,831		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,831		units.py		calc_integrated_intensity
+	 121042.978456
+2018-07-31 15:56:45,831		units.py		make_peak_str
+	 11-1
+2018-07-31 15:56:45,831		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/11-1/uncompressed_300K.atom.10000.11-1.ft
+2018-07-31 15:56:45,832		units.py		read_from_soh_output
+	 [array([ 0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,
+        1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,
+        1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05]), array([ 0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05]), array([-1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95,
+       -1.05, -1.  , -0.95, -1.05, -1.  , -0.95, -1.05, -1.  , -0.95]), array([  1.19907852e+04,   1.32764219e+05,   2.11613525e+03,
+         3.37653375e+05,   8.43438438e+04,   1.26982861e+04,
+         1.27667471e+04,   5.71838398e+04,   3.21870977e+04,
+         5.31064688e+04,   3.02417188e+04,   3.22891016e+04,
+         5.42478857e+03,   9.65866112e+08,   4.82666309e+03,
+         3.28637227e+04,   2.40245449e+04,   4.22487930e+04,
+         2.66175742e+04,   6.58946484e+04,   1.02308477e+04,
+         1.82882656e+04,   9.26730781e+04,   3.46192719e+05,
+         5.85943994e+03,   1.46070469e+05,   1.47100205e+04])]
+2018-07-31 15:56:45,834		units.py		find_point_of_max_height
+	 [1.0, 1.0, -1.0]
+2018-07-31 15:56:45,834		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,834		units.py		calc_integrated_intensity
+	 120937.672399
+2018-07-31 15:56:45,834		units.py		make_peak_str
+	 111
+2018-07-31 15:56:45,834		units.py		determine_soh_output_file_location
+	 /data/ashley/peakfinder_code/v3/peakfinder/test/data/111/uncompressed_300K.atom.10000.111.ft
+2018-07-31 15:56:45,834		units.py		read_from_soh_output
+	 [array([ 0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,  0.95,
+        1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,  1.  ,
+        1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05,  1.05]), array([ 0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05,
+        0.95,  0.95,  0.95,  1.  ,  1.  ,  1.  ,  1.05,  1.05,  1.05]), array([ 0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,
+        0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05,  0.95,  1.  ,  1.05]), array([  2.01850449e+02,   1.92362797e+05,   9.01493672e+04,
+         4.99649648e+04,   9.49900234e+04,   3.47823086e+04,
+         1.50152203e+05,   5.14660586e+04,   1.23086625e+05,
+         3.01245664e+04,   1.76310508e+04,   1.15468641e+05,
+         4.03097852e+04,   9.65219392e+08,   4.25405859e+04,
+         9.87779297e+04,   1.54741387e+04,   3.10898027e+04,
+         1.44725688e+05,   5.48057852e+04,   1.49745219e+05,
+         3.41950664e+04,   1.46893656e+05,   4.22471484e+04,
+         9.54675859e+04,   2.16598250e+05,   1.23910698e+02])]
+2018-07-31 15:56:45,837		units.py		find_point_of_max_height
+	 [1.0, 1.0, 1.0]
+2018-07-31 15:56:45,837		units.py		calc_dvol
+	 0.000125
+2018-07-31 15:56:45,837		units.py		calc_integrated_intensity
+	 120910.345876
+2018-07-31 15:56:45,837		calc_peak_intensities.py		run
+	 Brick calc_peak_intensities finished.
+
+2018-07-31 15:56:45,837		calc_debye_waller.py		run
+	 Brick calc_debye_waller started.
+
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7028046078
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7030305853
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7039008208
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7032881896
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7597871976
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7032881925
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7039009554
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7030305877
+2018-07-31 15:56:45,837		units.py		get_ln_intensity
+	 11.7028046068
+2018-07-31 15:56:45,837		units.py		get_gsqr_values
+	 [3.0, 3.0, 3.0, 3.0, 0.0, 3.0, 3.0, 3.0, 3.0]
