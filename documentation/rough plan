@@ -1,0 +1,31 @@
+Input script only gives variable names:
+    pathway
+    run_soh
+    make_plots
+    source
+    a_lattice
+    mass
+    timestep
+    del_k
+    k_steps
+    k_steps_accurate
+    
+Each unit has it's own file.
+
+Units are organised into bricks, which carry out  a larger process.
+
+Bricks are run together in pathway files. Each pathway defines a specific type of run (pathway 1 = static uncompressed; pathway 2 = static uniaxially compressed along 111; pathway 3 = shocked along 111).
+Each brick writes it's output to a file. This file is then read as input for the next brick.
+
+Each unit and brick is timed.
+
+Pathway 1:
+    startwatch
+    calc_md_temperature
+    get_fcc_list
+    get_peak_intensities
+    get_ln_intensity
+    get_slope_ln_intensity_vs_gsqr
+    calc_xrd_temperature
+    stopwatch
+    write_log_file
