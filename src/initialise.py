@@ -8,7 +8,7 @@ def run():
     
     # Sets up the log system.
     log.basicConfig(filename = "log.pkfd", filemode = "w", level = log.DEBUG, format = "%(asctime)s\t\t%(filename)s\t\t%(funcName)s\n\t %(message)s")
-    log.info("Peakfinder intialised.\n")
+    log.info("Peakfinder initialised.\n")
     
     # Removes previously created folders.
     if os.path.exists("data"):

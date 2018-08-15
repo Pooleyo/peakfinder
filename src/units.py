@@ -119,6 +119,8 @@ def calc_k_offset_with_N_atoms(N_atoms):
 
     offset = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
 
+    log.debug(offset)
+
     return offset
   
     
@@ -127,8 +129,10 @@ def convert_to_per_angstrom(element, a_lattice):
     import numpy as np
 
     element = np.asarray(element)
-    converted_element = element * ( a_lattice / (2 *np.pi) )
+    converted_element = element * ( (2 * np.pi) / a_lattice )
     converted_element = list(converted_element)
+
+    log.debug(converted_element)
 
     return converted_element
      
@@ -137,6 +141,8 @@ def make_peak_str(i):
 
     peak_str = str(i[0]) + str(i[1]) + str(i[2])
     
+    log.debug(peak_str)
+    
     return peak_str
         
         
@@ -144,12 +150,16 @@ def find_k_start(pos_element, offset):
 
     k_start = [pos_element[0] - offset[0], pos_element[1] - offset[1], pos_element[2] - offset[2]]
 
+    log.debug(k_start)
+
     return k_start
     
 
 def find_k_stop(pos_element, offset):
 
     k_stop = [pos_element[0] + offset[0], pos_element[1] + offset[1], pos_element[2] + offset[2]]
+
+    log.debug(k_stop)
 
     return k_stop
 
@@ -161,28 +171,234 @@ def determine_soh_input_file_location(peak_str):
     cwd = os.getcwd()
     input_file_location = cwd + "/data/" + peak_str + "/" + peak_str + ".in"
     
+    log.debug(input_file_location)
+    
     return input_file_location
     
+       
+def write_soh_input_3DFT(source_name, file_destination, peak_str, mass, a_lattice, k_steps, k_start, k_stop):
+
+    import os
+	
+    cwd = os.getcwd()
+    source_location = cwd + "/lammps/" + source_name
     
-def write_soh_input_3DFT(source_location, file_destination, peak_str, mass, a_lattice, k_steps, k_start, k_stop):
+    string_to_write = ("VERBOSE 0"
+    + "\nFILE_TYPE lammps-multi"
+    + "\nDATA_FILE " + str(source_location) 
+   	+ "\nAPPEND_FILE_NAME " + str(peak_str) 
+   	+ "\nPLOT_OUTPUT pdf"
+   	+ "\nCOORDS_SCALED"
+   	+ "\nSET_MASS " + str(mass) 
+   	+ "\nSET_A_CELL " + str(a_lattice)
+   	+ "\nCALC_3D_FT"
+   	+ "\nSET_KX " + str(k_start[0]) + " " + str(k_stop[0]) + " " + str(k_steps)
+   	+ "\nSET_KY " + str(k_start[1]) + " " + str(k_stop[1]) + " " + str(k_steps)
+   	+ "\nSET_KZ " + str(k_start[2]) + " " + str(k_stop[2]) + " " + str(k_steps)
+   	+ "\n"
+    )
     
-    string_to_write = "VERBOSE 0\nFILE_TYPE lammps-multi\nDATA_FILE " + str(source_location) + "\nAPPEND_FILE_NAME " + str(peak_str) + "\nPLOT_OUTPUT pdf\nCOORDS_SCALED\nSET_MASS " + str(mass) + "\nSET_A_CELL " + str(a_lattice) + "\nCALC_3D_FT\nSET_KX " + str(k_start[0]) + " " + str(k_stop[0]) + " " + str(k_steps) + "\nSET_KY " + str(k_start[1]) + " " + str(k_stop[1]) + " " + str(k_steps) + "\nSET_KZ " + str(k_start[2]) + " " + str(k_stop[2]) + " " + str(k_steps)
-    
-    f= open(file_destination, "w") 
+    f = open(file_destination, "w") 
     f.write(string_to_write)
     f.close()
     
-    log.debug("Unit finished, no internal output.")
+    log.debug(string_to_write)
     
     return string_to_write  
 
     
-def run_soh(input_file_location):
+def run_soh(input_file_location, num_cores):
 
     import subprocess
-
-    shell_command = "sonOfHoward " + input_file_location
+    
+    shell_command = "mpiexec -np " + str(num_cores) + " sonOfHoward " + input_file_location + " >/dev/null"
     
     subprocess.call(shell_command, shell=True)
+    
+    log.debug("sonOfHoward called using input file at " + input_file_location)
+    
+    return
+    
+    
+def move_soh_output_to_peak_folder(peak_str, source_name, timestep):
 
-    return  
+    import shutil
+    
+    origin = "./lammps/" + source_name + "." + timestep + "." + peak_str + ".ft"
+    destination = "./data/" + peak_str + "/"
+    
+    shutil.move(origin, destination)
+    
+    log.debug(origin + " moved to " + destination)
+    
+    return
+    
+    
+def determine_soh_output_file_location(peak_str, source_name, timestep):
+    
+    import os
+    
+    cwd = os.getcwd()
+    output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + "." + peak_str + ".ft"
+    
+    log.debug(output_file_location)
+    
+    return output_file_location
+    
+
+def read_from_soh_output(filename):
+
+    import numpy as np
+
+    kx, ky, kz, intensity = np.loadtxt(filename, skiprows=1, usecols=(0,1,2,5), unpack=True)    
+    soh_output = [kx, ky, kz, intensity]
+
+    log.debug(soh_output)
+
+    return soh_output
+    
+    
+def find_point_of_max_height(soh_output):
+
+    import numpy as np
+
+    max_height_index = np.argmax(soh_output[3])
+
+    point_of_max_height = [soh_output[0][max_height_index], soh_output[1][max_height_index], soh_output[2][max_height_index]]
+
+    log.debug(point_of_max_height)
+    
+    return point_of_max_height
+    
+
+def calc_dvol(soh_output):
+    
+    k_step = len(soh_output[0]) ** (1.0/3.0)
+    dkx = ( max(soh_output[0]) - min(soh_output[0]) ) / (k_step - 1)
+    dky = ( max(soh_output[1]) - min(soh_output[1]) ) / (k_step - 1)
+    dkz = ( max(soh_output[2]) - min(soh_output[2]) ) / (k_step - 1)
+    dvol = dkx * dky * dkz
+
+    log.debug(dvol)
+    
+    return dvol
+
+
+def calc_integrated_intensity(soh_output, dvol):
+
+    intensity_sum = sum(soh_output[3])
+    integrated_intensity = dvol * intensity_sum
+
+    log.debug(integrated_intensity)
+    
+    return integrated_intensity
+    
+
+def get_ln_intensity(intensity):
+
+    import numpy as np
+
+    ln_intensity = np.log(intensity)
+    
+    log.debug(ln_intensity)
+
+    return ln_intensity
+    
+    
+def calc_line_slope_and_constant(x, y):
+
+    import numpy as np
+    
+    slope, constant = np.polyfit(x, y, 1, cov=False)
+
+    log.debug("slope = " + str(slope) + "\nconstant = " + str(constant))
+
+    return slope, constant
+    
+
+def calc_debye_waller_constant(m):
+
+    from scipy.constants import h, N_A, k, pi
+
+    debye_waller_constant = (10 ** 20) * 3 * (h ** 2) * N_A / (4 * (pi ** 2) * m * (10 ** -3) * k)
+
+    log.debug(debye_waller_constant)
+
+    return debye_waller_constant
+            
+        
+def calc_debye_temperature_xrd(temperature, slope, debye_waller_constant):
+
+    import numpy as np
+
+    debye_temperature = np.sqrt(debye_waller_constant * temperature * abs( 1.0 / slope ))
+
+    log.debug(debye_temperature)
+
+    return debye_temperature
+
+
+def calc_debye_temperature_from_single_term_gruneisen_model(debye_temperautre_300K_uncompressed, initial_volume, final_volume, gamma_uncompressed, exponent):
+
+    import numpy as np
+
+    #  See Will Murphy PHYSICAL REVIEW B 78, 014109 (2008) for the source of this equation.
+
+    exponent_term = - (gamma_uncompressed / (exponent * initial_volume)) * ((final_volume ** exponent) - (initial_volume ** exponent))
+
+    correction_factor = np.exp(exponent_term)
+
+    model_debye_temperature = debye_temperautre_300K_uncompressed * correction_factor
+
+    log.debug(model_debye_temperature)
+
+    return model_debye_temperature
+
+
+def calc_debye_temperature_from_triple_term_gruneisen_model(debye_temperature_300K_uncompressed, initial_volume, final_volume, gamma_uncompressed, constants):
+
+    import numpy as np
+
+    constant_term_1 = gamma_uncompressed - constants[0] + constants[1] - constants[2]
+
+    volume_term_1 = np.log(final_volume) - np.log(initial_volume)
+
+    constant_term_2 = - constants[0] + 2 * constants[1] - 3 * constants[2]
+
+    volume_term_2 = initial_volume * ((1 / final_volume) - (1 / initial_volume))
+
+    constant_term_3 = - (constants[1] / 2.0) + (3 * constants[2] / 2.0)
+
+    volume_term_3 = (initial_volume ** 2) * ((1 / (final_volume ** 2)) - (1 / (initial_volume ** 2)))
+
+    constant_term_4 = - constants[2] / 3.0
+
+    volume_term_4 = (initial_volume ** 3) * ((1 / (final_volume ** 3)) - (1 / (initial_volume ** 3)))
+
+    exponent_term = (constant_term_1 * volume_term_1) + (constant_term_2 * volume_term_2) + (constant_term_3 * volume_term_3) + (constant_term_4 * volume_term_4)
+
+    correction_factor = np.exp(- exponent_term)
+
+    model_debye_temperature = debye_temperature_300K_uncompressed * correction_factor
+
+    log.debug(model_debye_temperature)
+
+    return model_debye_temperature
+
+
+def calc_volume_lattice_units(a_lattice, compression_factors):
+
+    volume = a_lattice ** 3 * (compression_factors[0] * compression_factors[1] * compression_factors[2])
+
+    log.debug(volume)
+
+    return volume
+
+
+def calc_temperature_xrd(debye_temperature, slope, debye_waller_constant):
+
+    temperature = (debye_temperature ** 2) * abs(slope) * (1.0 / debye_waller_constant)
+
+    log.debug(temperature)
+
+    return temperature

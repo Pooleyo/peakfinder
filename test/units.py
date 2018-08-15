@@ -211,7 +211,7 @@ def run_soh(input_file_location, num_cores):
 
     import subprocess
     
-    shell_command = "mpiexec -np " + str(num_cores) + " sonOfHoward " + input_file_location
+    shell_command = "mpiexec -np " + str(num_cores) + " sonOfHoward " + input_file_location + " >/dev/null"
     
     subprocess.call(shell_command, shell=True)
     
@@ -321,16 +321,84 @@ def calc_debye_waller_constant(m):
     from scipy.constants import h, N_A, k, pi
 
     debye_waller_constant = (10 ** 20) * 3 * (h ** 2) * N_A / (4 * (pi ** 2) * m * (10 ** -3) * k)
-    
+
+    log.debug(debye_waller_constant)
+
     return debye_waller_constant
             
         
-def calc_debye_temperature(temperature, slope, debye_waller_constant):
+def calc_debye_temperature_xrd(temperature, slope, debye_waller_constant):
 
     import numpy as np
 
-    debye_temperature = np.sqrt( debye_waller_constant * temperature * abs( 1.0 / slope ) )
-    
-    print debye_temperature
+    debye_temperature = np.sqrt(debye_waller_constant * temperature * abs( 1.0 / slope ))
+
+    log.debug(debye_temperature)
 
     return debye_temperature
+
+
+def calc_debye_temperature_from_single_term_gruneisen_model(debye_temperautre_300K_uncompressed, initial_volume, final_volume, gamma_uncompressed, exponent):
+
+    import numpy as np
+
+    #  See Will Murphy PHYSICAL REVIEW B 78, 014109 (2008) for the source of this equation.
+
+    exponent_term = - (gamma_uncompressed / (exponent * initial_volume)) * ((final_volume ** exponent) - (initial_volume ** exponent))
+
+    correction_factor = np.exp(exponent_term)
+
+    model_debye_temperature = debye_temperautre_300K_uncompressed * correction_factor
+
+    log.debug(model_debye_temperature)
+
+    return model_debye_temperature
+
+
+def calc_debye_temperature_from_triple_term_gruneisen_model(debye_temperature_300K_uncompressed, initial_volume, final_volume, gamma_uncompressed, constants):
+
+    import numpy as np
+
+    constant_term_1 = gamma_uncompressed - constants[0] + constants[1] - constants[2]
+
+    volume_term_1 = np.log(final_volume) - np.log(initial_volume)
+
+    constant_term_2 = - constants[0] + 2 * constants[1] - 3 * constants[2]
+
+    volume_term_2 = initial_volume * ((1 / final_volume) - (1 / initial_volume))
+
+    constant_term_3 = - (constants[1] / 2.0) + (3 * constants[2] / 2.0)
+
+    volume_term_3 = (initial_volume ** 2) * ((1 / (final_volume ** 2)) - (1 / (initial_volume ** 2)))
+
+    constant_term_4 = - constants[2] / 3.0
+
+    volume_term_4 = (initial_volume ** 3) * ((1 / (final_volume ** 3)) - (1 / (initial_volume ** 3)))
+
+    exponent_term = (constant_term_1 * volume_term_1) + (constant_term_2 * volume_term_2) + (constant_term_3 * volume_term_3) + (constant_term_4 * volume_term_4)
+
+    correction_factor = np.exp(- exponent_term)
+
+    model_debye_temperature = debye_temperature_300K_uncompressed * correction_factor
+
+    log.debug(model_debye_temperature)
+
+    return model_debye_temperature
+
+
+def calc_volume_lattice_units(a_lattice, compression_factors):
+
+    volume = a_lattice ** 3 * (compression_factors[0] * compression_factors[1] * compression_factors[2])
+
+    log.debug(volume)
+
+    return volume
+
+
+def calc_temperature_xrd(debye_temperature, slope, debye_waller_constant):
+
+    temperature = (debye_temperature ** 2) * abs(slope) * (1.0 / debye_waller_constant)
+
+    log.debug(temperature)
+
+    return temperature

@@ -10,11 +10,11 @@ atom_style atomic
 
 # ATOM DEFINITION
 
-lattice fcc 3.615
+lattice fcc 3.6288
 
-variable x equal 20
-variable y equal 20
-variable z equal 20
+variable x equal 5
+variable y equal 5
+variable z equal 5
 
 region simbox block 0 $x 0 $y 0 $z
 create_box 1 simbox
@@ -22,11 +22,11 @@ create_atoms 1 box
 
 # SETTINGS
 
-pair_coeff * * /data/ashley/wills_thesis/cu_potential/cuMishinAlloy Cu
-velocity all create 300.0 62974 dist gaussian
+pair_coeff * * /data/code/potentials/Cu_mishin1.eam.alloy Cu
+velocity all create 300.0 629 dist gaussian
 fix 1 all nvt temp 300.0 300.0 0.1
 
-dump myDump all atom 10000 uncompressed_300K.atom
+dump myDump all atom 10000 uncompressed_300K_*.atom
 
 #defaults
 timestep 0.001

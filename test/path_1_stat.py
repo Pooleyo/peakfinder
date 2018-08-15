@@ -1,11 +1,13 @@
 def run():
 
+    import inpkfd as ip
+
     import select_peak_positions
     import build_datafile_structure
     import use_soh_for_3DFT
     import calc_peak_intensities
     import calc_debye_waller
-    import inpkfd as ip
+
     import logging as log
     
     log.info("Path %s started.\n", __name__)
@@ -18,7 +20,12 @@ def run():
     
     peak_centre, integrated_intensity = calc_peak_intensities.run(pos_est, ip.source_name, ip.timestep)
     
-    calc_debye_waller.run(peak_centre, integrated_intensity, ip.mass, ip.temperature)
+    debye_temperature, temperature = calc_debye_waller.run(peak_centre, integrated_intensity, ip.a_lattice, ip.mass,
+                                                           ip.temperature, ip.uncompressed_debye_temperature,
+                                                           ip.single_term_model_gamma_0_values,
+                                                           ip.single_term_model_exponent_values,
+                                                           ip.triple_term_model_gamma_0_values,
+                                                           ip.triple_term_model_constants)
     
     #plot.run()
         

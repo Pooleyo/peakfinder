@@ -13,8 +13,8 @@ def run(pos_est, source_name, timestep, mass, a_lattice, N_atoms, k_steps, run_s
         peak_str = un.make_peak_str(i)
         input_file_location = un.determine_soh_input_file_location(peak_str)
         un.write_soh_input_3DFT(source_name, input_file_location, peak_str, mass, a_lattice, k_steps, k_start, k_stop)
-    
-    if run_soh == True:
+
+    if run_soh is True:
     
         for i in pos_est:
             peak_str = un.make_peak_str(i)

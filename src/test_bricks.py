@@ -1,6 +1,5 @@
 def run(brick_name, test_input, expected_result):
 
-    import importlib
     exec("import " + brick_name)
 
     string_test_input = str(test_input)
