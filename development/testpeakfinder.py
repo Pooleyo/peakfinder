@@ -33,7 +33,7 @@ tu.run("calc_line_slope_and_constant", [[0,2],[1,4]], (1.4999999999999996,0.9999
 
 tu.run("calc_debye_waller_constant", [1.0], 145.5262505987811)
 
-tu.run("calc_debye_temperature_from_xrd", [300,-2,150], 150)
+tu.run("calc_debye_temperature_xrd", [300,-2,150], 150)
 
 tu.run("calc_debye_temperature_from_single_term_gruneisen_model", [200, 1.0, 0.9, 2.0, 2.0], 241.8499195314503)
 
@@ -45,7 +45,9 @@ tu.run("calc_debye_temperature_from_triple_term_gruneisen_model", [320, 1.0, 0.9
 
 tu.run("calc_temperature_xrd", [320.0, -1, 2.29], 44716.157205240175)
 
+tu.run("find_line_data_from_3DFT", [[0,1], 2, [1,1,1], [[0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2], [0,0,0,1,1,1,2,2,2,0,0,0,1,1,1,2,2,2,0,0,0,1,1,1,2,2,2], [0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2], [0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7,0,1,2,3,4,5,6,7,0,1,2]]], ([0,1,2],[4,5,6]))
+
 ########################
 # Brick tests.
 
-tb.run( "select_peak_positions", [6, False, False], ([[0,0,0], [0,0,2], [0,2,0], [1,1,1], [2,0,0]], [0,4,4,3,4]))
+tb.run("select_peak_positions", [6, False, False], ([[0,0,0], [0,0,2], [0,2,0], [1,1,1], [2,0,0]], [0,4,4,3,4]))

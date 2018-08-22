@@ -16,8 +16,8 @@ def run(unit_name, test_input, expected_result):
     elif actual_result != expected_result:
 
         print "\n####FAIL####\t\t" + "UNIT\t\t" + unit_name
-        print "Expected result =\t%.12f" % expected_result
-        print "Actual result \t=\t%.12f\n" % actual_result
+        print "Expected result =\t" + str(expected_result)
+        print "Actual result \t=\t" + str(actual_result) + "\n"
         
     else:
     

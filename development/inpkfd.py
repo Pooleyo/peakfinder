@@ -4,7 +4,7 @@ make_plots = True
 num_cores = 4
 
 # Input for "select_peak_positions"
-gsqr_max = 100
+gsqr_max = 3
 negative_k = True
 remove_000 = False
 
@@ -13,7 +13,7 @@ source_name = "uncompressed_300K_10000.atom"
 timestep = "10000"  # Only used in moving soh output files.
 mass = 63.546  # In amu
 a_lattice = 3.615  # In Angstroms
-k_steps = 11
+k_steps = 3
 N_atoms = [5, 5, 5]
 
 # Input for use by "calc_debye_waller"

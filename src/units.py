@@ -232,6 +232,20 @@ def move_soh_output_to_peak_folder(peak_str, source_name, timestep):
     log.debug(origin + " moved to " + destination)
     
     return
+
+
+def move_plot_output_to_peak_folder(direction, peak_str):
+
+    import shutil
+
+    origin = direction + ".png"
+    destination = "./data/" + peak_str + "/"
+
+    shutil.move(origin, destination)
+
+    log.debug(origin + " moved to " + destination)
+
+    return
     
     
 def determine_soh_output_file_location(peak_str, source_name, timestep):
@@ -402,3 +416,46 @@ def calc_temperature_xrd(debye_temperature, slope, debye_waller_constant):
     log.debug(temperature)
 
     return temperature
+
+
+def plot(x, y, filename):
+
+    import pyqtgraph as pg
+    import pyqtgraph.exporters
+
+    plt = pg.plot(x, y)
+
+    # create an exporter instance, as an argument give it
+    # the item you wish to export
+    exporter = pg.exporters.ImageExporter(plt.plotItem)
+
+    # set export parameters if needed
+    exporter.parameters()['width'] = 400  # (note this also affects height parameter)
+
+    # save to file
+    exporter.export(filename)
+
+    return
+
+
+def find_line_data_from_3DFT(constant_axes, variable_axis, centre_point, soh_output):
+
+    constant_value_0 = centre_point[constant_axes[0]]
+
+    constant_value_1 = centre_point[constant_axes[1]]
+
+    line_points = []
+
+    line_intensity = []
+
+    for i, intensity in enumerate(soh_output[3]):
+
+        if soh_output[constant_axes[0]][i] == constant_value_0 and soh_output[constant_axes[1]][i] == constant_value_1:
+
+            line_k = soh_output[variable_axis][i]
+
+            line_points.append(line_k)
+
+            line_intensity.append(intensity)
+
+    return line_points, line_intensity
