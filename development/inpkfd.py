@@ -1,11 +1,11 @@
 path = "path_1_stat"  # Choose: "path_1_stat"
 run_soh = True
-make_plots = True
+make_peak_plots = True
 num_cores = 4
 
 # Input for "select_peak_positions"
-gsqr_max = 3
-negative_k = True
+gsqr_max = 16
+negative_k = False
 remove_000 = False
 
 # Input for "use_soh_for_3DFT"
@@ -13,7 +13,7 @@ source_name = "uncompressed_300K_10000.atom"
 timestep = "10000"  # Only used in moving soh output files.
 mass = 63.546  # In amu
 a_lattice = 3.615  # In Angstroms
-k_steps = 3
+k_steps = 5
 N_atoms = [5, 5, 5]
 
 # Input for use by "calc_debye_waller"

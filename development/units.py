@@ -418,7 +418,21 @@ def calc_temperature_xrd(debye_temperature, slope, debye_waller_constant):
     return temperature
 
 
-def plot(x, y, filename):
+def plot_matplotlib(x, y, filename, x_label, y_label, plot_title):
+
+    import matplotlib.pyplot as plt
+
+    plt.scatter(x, y)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(plot_title)
+    plt.savefig(filename)
+    plt.close()
+
+    return
+
+
+def plot_pyqtgraph(x, y, filename):
 
     import pyqtgraph as pg
     import pyqtgraph.exporters
@@ -459,3 +473,59 @@ def find_line_data_from_3DFT(constant_axes, variable_axis, centre_point, soh_out
             line_intensity.append(intensity)
 
     return line_points, line_intensity
+
+
+def write_temperatures_to_file(debye_temperature, temperature, filename_temperatures):
+
+    f = open(filename_temperatures, "w")
+    f.write(
+        "Debye temperature\t\t\t\t" + str(debye_temperature) + "\n"
+        "Temperature\t\t\t\t\t\t" + str(temperature)
+    )
+    f.close()
+
+    return
+
+
+def write_peak_intensities_to_file(pos_est, peak_centre, gsqr, integrated_intensity, ln_intensity, filename):
+
+    header_string = "peak_name peak_centre gsqr integrated_intensity ln_intensity\n"
+
+    f = open(filename, "w")
+    f.write(header_string)
+    for i, pos in enumerate(pos_est):
+        f.write("%s %s %s %s %s\n" % (pos, peak_centre[i], gsqr[i], integrated_intensity[i], ln_intensity[i]))
+    f.close()
+
+    return
+
+
+def find_if_vectors_parallel(v_1, v_2):
+
+    import numpy as np
+
+    length_1 = np.linalg.norm(v_1)
+
+    length_2 = np.linalg.norm(v_2)
+
+    if np.isclose(length_1, 0.0) is True or np.isclose(length_2, 0.0) is True:
+
+        result = True
+
+    else:
+
+        normalised_1 = v_1 / length_1
+
+        normalised_2 = v_2 / length_2
+
+        dot_prod = np.dot(normalised_1, normalised_2)
+
+        if np.isclose(dot_prod, 1.0) is True:
+
+            result = True
+
+        else:
+
+            result = False
+
+    return result

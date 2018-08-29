@@ -61,4 +61,4 @@ def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye
 
     log.debug("Brick %s finished.\n", __name__)
 
-    return debye_temperature_xrd, temperature_xrd
+    return debye_temperature_xrd, temperature_xrd, gsqr_per_angstrom, ln_intensity
