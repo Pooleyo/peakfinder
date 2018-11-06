@@ -1,0 +1,12 @@
+VERBOSE 0
+FILE_TYPE lammps-multi
+DATA_FILE /home/ajp560/Documents/codes/peakfinder.py/development/lammps/uncompressed_cu_300K_5x5x60_10000.atom
+APPEND_FILE_NAME 282
+PLOT_OUTPUT pdf
+COORDS_SCALED
+SET_MASS 63.546
+SET_A_CELL 3.628
+CALC_3D_FT
+SET_KX 1.8 2.2 5
+SET_KY 7.8 8.2 5
+SET_KZ 1.98333333333 2.01666666667 5
