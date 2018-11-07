@@ -1,0 +1,9 @@
+root_directory = "/data/ashley/number_atoms_xrd_effect/data/NxNxN"
+
+subdirectory_prefix = "uncompressed_300K_"
+
+subdirectory_suffix = ""
+
+subdirectory_variable_list = ["10x10x10", "20x20x20", "30x30x30", "40x40x40", "50x50x50", "60x60x60", "70x70x70", "80x80x80", "90x90x90", "100x100x100"]
+
+peakfinder_src_location = "/data/ashley/number_atoms_xrd_effect/data/peakfinder/src/"
