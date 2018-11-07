@@ -28,9 +28,4 @@ def run(peak_str, peak_centre, source_name, timestep):
             un.plot_pygnuplot(k, intensity, plot_filename, plot_data_filename)
 
     return
-"""
-        for direction in directions:
-
-            un.move_plot_output_to_peak_folder(direction, current_peak_str)
-"""
 

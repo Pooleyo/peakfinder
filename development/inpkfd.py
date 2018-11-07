@@ -1,4 +1,4 @@
-path = "path_1_stat"  # Choose: "path_1_stat"
+path = "path_1_static_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding"
 run_soh = True
 make_peak_plots = True
 num_cores = 2
