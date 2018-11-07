@@ -13,7 +13,7 @@ source_name = "uncompressed_cu_300K_5x5x60_10000.atom"
 timestep = "10000"  # Only used in moving soh output files.
 mass = 63.546  # In amu
 a_lattice = 3.628  # In Angstroms
-k_steps = 5
+k_steps = 21
 N_atoms = [5, 5, 60]
 
 # Input for use by "calc_debye_waller"
