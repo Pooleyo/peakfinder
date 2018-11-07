@@ -11,7 +11,8 @@ def run():
     log.info("Peakfinder initialised.\n")
     
     # Removes previously created folders.
-    if os.path.exists("data"):
-        shutil.rmtree("data")
+    if ip.run_soh is True:
+        if os.path.exists("data"):
+            shutil.rmtree("data")
 
     return

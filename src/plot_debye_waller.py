@@ -2,6 +2,8 @@ def run(gsqr, ln_intensity, pos_est, temperature, mass):
 
     import units as un
 
+    print "Plotting intensity vs. G^2 for all peaks, and in kx, ky, kz..."
+
     filename = "ln_intensity_vs_gsqr_per_angstrom.png"
 
     x_label = "$G^2$ (A$^-2$)"

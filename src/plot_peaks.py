@@ -2,6 +2,8 @@ def run(peak_str, peak_centre, source_name, timestep):
 
     import units as un
 
+    print "Plotting each individual peak in kx, ky, and kz..."
+
     directions = ["kx", "ky", "kz"]
 
     constant_axes = [[1,2], [0,2], [0,1]]
@@ -20,12 +22,10 @@ def run(peak_str, peak_centre, source_name, timestep):
 
             k, intensity = un.find_line_data_from_3DFT(constant_axes[j], variable_axes[j], centre_point, soh_output)
 
-            plot_filename = direction + ".png"
+            plot_data_filename = "./data/" + current_peak_str + "/" + direction + ".dat"
+            plot_filename = "./data/" + current_peak_str + "/" + direction + ".png"
 
-            un.plot_pyqtgraph(k, intensity, plot_filename)
-
-        for direction in directions:
-
-            un.move_plot_output_to_peak_folder(direction, current_peak_str)
+            un.plot_pygnuplot(k, intensity, plot_filename, plot_data_filename)
 
     return
+

@@ -437,17 +437,33 @@ def plot_pyqtgraph(x, y, filename):
     import pyqtgraph as pg
     import pyqtgraph.exporters
 
-    plt = pg.plot(x, y)
+    class MyPlotClass():
 
-    # create an exporter instance, as an argument give it
-    # the item you wish to export
-    exporter = pg.exporters.ImageExporter(plt.plotItem)
+        def __init__(self):
+            self.windowplt = pg.plot()
+            self.windowplt.win.hide()
 
-    # set export parameters if needed
-    exporter.parameters()['width'] = 400  # (note this also affects height parameter)
+        def savePlot(self, x, y, filename):
+            self.windowplt.plot(x, y)
+            exporter = pg.exporters.ImageExporter(self.windowplt.plotItem)
+            exporter.params.param('width').setValue(256, blockSignal=exporter.widthChanged)
+            exporter.params.param('height').setValue(256, blockSignal=exporter.heightChanged)
+            exporter.export(filename)
 
-    # save to file
-    exporter.export(filename)
+    save_plot = MyPlotClass()
+    save_plot.savePlot(x, y, filename)
+
+    return
+
+
+def plot_pygnuplot(x, y, filename, data_filename):
+
+    import PyGnuplot as gnu
+
+    gnu.s([x,y], data_filename)
+    gnu.c('set terminal pngcairo size 350,262 enhanced font "Verdana,10"')
+    gnu.c('set output "' + filename + '"')
+    gnu.c('plot "' + data_filename + '" w lp pi -1')
 
     return
 
@@ -503,14 +519,19 @@ def write_peak_intensities_to_file(pos_est, peak_centre, gsqr, integrated_intens
 def find_if_vectors_parallel(v_1, v_2):
 
     import numpy as np
+    import math
 
     length_1 = np.linalg.norm(v_1)
 
     length_2 = np.linalg.norm(v_2)
 
-    if np.isclose(length_1, 0.0) is True or np.isclose(length_2, 0.0) is True:
+    if length_1 < 0.000001:
 
-        result = True
+        result = False
+
+    elif length_2 < 0.00001:
+
+        result = False
 
     else:
 
@@ -520,7 +541,11 @@ def find_if_vectors_parallel(v_1, v_2):
 
         dot_prod = np.dot(normalised_1, normalised_2)
 
-        if np.isclose(dot_prod, 1.0) is True:
+        if math.isnan(dot_prod) is True:
+
+            result = False
+
+        elif int(dot_prod) is 1:
 
             result = True
 
