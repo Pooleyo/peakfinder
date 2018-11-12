@@ -1,19 +1,25 @@
-path = "path_1_static_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding"
+path = "path_2_dynamic_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding"
 run_soh = True
 make_peak_plots = True
 num_cores = 2
 
 # Input for "select_peak_positions"
-gsqr_max = 81
+gsqr_max = 20
 negative_k = False
 remove_000 = False
+
+# Input for "find_compression_ratio"
+uncompressed_peak_positions = [[2.0, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 2.0]]
+undershoot = 0.5
+overshoot = 1.5
+lineout_k_steps = 1e4 + 1
 
 # Input for "use_soh_for_3DFT"
 source_name = "uncompressed_cu_300K_5x5x60_10000.atom"
 timestep = "10000"  # Only used in moving soh output files.
 mass = 63.546  # In amu
 a_lattice = 3.628  # In Angstroms
-k_steps = 21
+k_steps = 11
 N_atoms = [5, 5, 60]
 
 # Input for use by "calc_debye_waller"

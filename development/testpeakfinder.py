@@ -51,6 +51,10 @@ tu.run("find_if_vectors_parallel", [[1,1,1], [2,2,2]], True)
 
 tu.run("find_if_vectors_parallel", [[0,0,1], [2,2,2]], False)
 
+tu.run("calc_lineout_k_start_stop", [[2.0, 2.0, -2.0], 0.5, 1.5], ([1.0,1.0,-1.0], [3.0, 3.0, -3.0]))
+
+tu.run("calc_compression_ratio", [1.5, 3.0], 0.5)
+
 ########################
 # Brick tests.
 

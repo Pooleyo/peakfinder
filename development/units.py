@@ -115,6 +115,16 @@ def build_datafile_structure(pos):
     return peak_str
 
 
+def make_lineout_directory():
+
+    import os
+
+    os.makedirs("data/lineouts")
+
+    log.debug("Made directory for lineout data.")
+
+    return
+
 def calc_k_offset_with_N_atoms(N_atoms):
 
     offset = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
@@ -164,6 +174,29 @@ def find_k_stop(pos_element, offset):
     return k_stop
 
 
+def calc_lineout_k_start_stop(uncompressed_peak_centre, under_shoot, over_shoot):
+
+    k_start = [uncompressed_peak_centre[0] * under_shoot, uncompressed_peak_centre[1] * under_shoot, uncompressed_peak_centre[2] * under_shoot]
+    k_stop = [uncompressed_peak_centre[0] * over_shoot, uncompressed_peak_centre[1] * over_shoot, uncompressed_peak_centre[2] * over_shoot]
+
+    log.debug(k_start)
+    log.debug(k_stop)
+
+    return k_start, k_stop
+
+
+def determine_soh_1DFT_input_file_location(direction):
+
+    import os
+
+    cwd = os.getcwd()
+    input_file_location = cwd + "/data/lineouts/" + direction + "_lineout.in"
+
+    log.debug(input_file_location)
+
+    return input_file_location
+
+
 def determine_soh_input_file_location(peak_str):
     
     import os
@@ -174,8 +207,37 @@ def determine_soh_input_file_location(peak_str):
     log.debug(input_file_location)
     
     return input_file_location
-    
-       
+
+
+def write_soh_input_1DFT(source_name, file_destination, direction_str, mass, a_lattice, k_start, k_stop, k_steps):
+
+    import os
+    cwd = os.getcwd()
+    source_location = cwd + "/lammps/" + source_name
+    string_to_write = ("VERBOSE 0"
+                       + "\nFILE_TYPE lammps-multi"
+                       + "\nDATA_FILE " + str(source_location)
+                       + "\nAPPEND_FILE_NAME lineout_" + str(direction_str)
+                       + "\nPLOT_OUTPUT pdf"
+                       + "\nCOORDS_SCALED"
+                       + "\nSET_MASS " + str(mass)
+                       + "\nSET_A_CELL " + str(a_lattice)
+                       + "\nCALC_1D_FT"
+                       + "\nSET_K_START " + str(k_start[0]) + " " + str(k_start[1]) + " " + str(k_start[2]) + " "
+                       + "\nSET_K_STOP " + str(k_stop[0]) + " " + str(k_stop[1]) + " " + str(k_stop[2]) + " "
+                       + "\nSET_NK " + str(k_steps)
+                       + "\n"
+                       )
+
+    f = open(file_destination, "w")
+    f.write(string_to_write)
+    f.close()
+
+    log.debug(string_to_write)
+
+    return string_to_write
+
+
 def write_soh_input_3DFT(source_name, file_destination, peak_str, mass, a_lattice, k_steps, k_start, k_stop):
 
     import os
@@ -234,6 +296,19 @@ def move_soh_output_to_peak_folder(peak_str, source_name, timestep):
     return
 
 
+def move_soh_output_to_lineout_folder(lineout_str, source_name, timestep):
+    import shutil
+
+    origin = "./lammps/" + source_name + "." + timestep + ".lineout_" + lineout_str + ".ft"
+    destination = "./data/lineouts/"
+
+    shutil.move(origin, destination)
+
+    log.debug(origin + " moved to " + destination)
+
+    return
+
+
 def move_plot_output_to_peak_folder(direction, peak_str):
 
     import shutil
@@ -257,6 +332,17 @@ def determine_soh_output_file_location(peak_str, source_name, timestep):
     
     log.debug(output_file_location)
     
+    return output_file_location
+
+
+def determine_soh_1DFT_output_file_location(direction_str, source_name, timestep):
+    import os
+
+    cwd = os.getcwd()
+    output_file_location = cwd + "/data/lineouts/" + source_name + "." + timestep + ".lineout_" + direction_str + ".ft"
+
+    log.debug(output_file_location)
+
     return output_file_location
     
 
@@ -373,6 +459,8 @@ def calc_debye_temperature_from_triple_term_gruneisen_model(debye_temperature_30
 
     import numpy as np
 
+    #  See Will Murphy PHYSICAL REVIEW B 78, 014109 (2008) for the source of this equation.
+
     constant_term_1 = gamma_uncompressed - constants[0] + constants[1] - constants[2]
 
     volume_term_1 = np.log(final_volume) - np.log(initial_volume)
@@ -463,7 +551,7 @@ def plot_pygnuplot(x, y, filename, data_filename):
     gnu.s([x,y], data_filename)
     gnu.c('set terminal pngcairo size 350,262 enhanced font "Verdana,10"')
     gnu.c('set output "' + filename + '"')
-    gnu.c('plot "' + data_filename + '" w lp pi -1')
+    gnu.c('plot "' + data_filename + '" pt 1 ps 0.5')
 
     return
 
@@ -500,6 +588,8 @@ def write_temperatures_to_file(debye_temperature, temperature, filename_temperat
     )
     f.close()
 
+    log.debug(filename_temperatures)
+
     return
 
 
@@ -512,6 +602,8 @@ def write_peak_intensities_to_file(pos_est, peak_centre, gsqr, integrated_intens
     for i, pos in enumerate(pos_est):
         f.write("%s %s %s %s %s\n" % (pos, peak_centre[i], gsqr[i], integrated_intensity[i], ln_intensity[i]))
     f.close()
+
+    log.debug(filename)
 
     return
 
@@ -553,4 +645,15 @@ def find_if_vectors_parallel(v_1, v_2):
 
             result = False
 
+    log.debug(result)
+
     return result
+
+
+def calc_compression_ratio(compressed_k, uncompressed_k):
+
+    compression_ratio = compressed_k/uncompressed_k
+
+    log.debug(compression_ratio)
+
+    return compression_ratio

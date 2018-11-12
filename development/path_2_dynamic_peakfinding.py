@@ -10,6 +10,7 @@ def run():
     import write_output_files
     import plot_debye_waller
     import plot_peaks
+    import find_compression_ratio
 
     import logging as log
 
@@ -18,6 +19,9 @@ def run():
     pos_est, gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000)
 
     peak_str = build_datafile_structure.run(pos_est)
+
+    compression_ratio = find_compression_ratio.run(ip.run_soh, ip.uncompressed_peak_positions, ip.undershoot, ip.overshoot, ip.source_name, ip.mass,
+                               ip.a_lattice, ip.lineout_k_steps, ip.num_cores, ip.timestep)
 
     use_soh_for_3DFT.run(pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice, ip.N_atoms, ip.k_steps,
                          ip.run_soh, ip.num_cores)
