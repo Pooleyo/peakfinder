@@ -15,7 +15,7 @@ def run(pos, source_name, timestep):
 
         peak_str = un.make_peak_str(i)
 
-        soh_output_file_location = un.determine_soh_output_file_location(peak_str, source_name, timestep)
+        soh_output_file_location = un.determine_accurate_soh_output_file_location(peak_str, source_name, timestep)
 
         soh_output = un.read_from_soh_output(soh_output_file_location)
 

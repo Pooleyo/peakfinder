@@ -197,7 +197,7 @@ def determine_soh_1DFT_input_file_location(direction):
     return input_file_location
 
 
-def determine_soh_input_file_location(peak_str):
+def determine_accurate_soh_input_file_location(peak_str):
     
     import os
     
@@ -206,6 +206,17 @@ def determine_soh_input_file_location(peak_str):
     
     log.debug(input_file_location)
     
+    return input_file_location
+
+
+def determine_rough_soh_input_file_location(peak_str):
+    import os
+
+    cwd = os.getcwd()
+    input_file_location = cwd + "/data/" + peak_str + "/find_centre_" + peak_str + ".in"
+
+    log.debug(input_file_location)
+
     return input_file_location
 
 
@@ -238,7 +249,7 @@ def write_soh_input_1DFT(source_name, file_destination, direction_str, mass, a_l
     return string_to_write
 
 
-def write_soh_input_3DFT(source_name, file_destination, peak_str, mass, a_lattice, k_steps, k_start, k_stop):
+def write_soh_input_3DFT(source_name, file_destination, appended_string, mass, a_lattice, k_steps, k_start, k_stop):
 
     import os
 	
@@ -248,7 +259,7 @@ def write_soh_input_3DFT(source_name, file_destination, peak_str, mass, a_lattic
     string_to_write = ("VERBOSE 0"
     + "\nFILE_TYPE lammps-multi"
     + "\nDATA_FILE " + str(source_location) 
-   	+ "\nAPPEND_FILE_NAME " + str(peak_str) 
+   	+ "\nAPPEND_FILE_NAME " + str(appended_string)
    	+ "\nPLOT_OUTPUT pdf"
    	+ "\nCOORDS_SCALED"
    	+ "\nSET_MASS " + str(mass) 
@@ -282,7 +293,7 @@ def run_soh(input_file_location, num_cores):
     return
     
     
-def move_soh_output_to_peak_folder(peak_str, source_name, timestep):
+def move_soh_accurate_output_to_peak_folder(peak_str, source_name, timestep):
 
     import shutil
     
@@ -293,6 +304,20 @@ def move_soh_output_to_peak_folder(peak_str, source_name, timestep):
     
     log.debug(origin + " moved to " + destination)
     
+    return
+
+
+def move_soh_rough_output_to_peak_folder(peak_str, appended_string, source_name, timestep):
+
+    import shutil
+
+    origin = "./lammps/" + source_name + "." + timestep + "." + appended_string + ".ft"
+    destination = "./data/" + peak_str + "/"
+
+    shutil.move(origin, destination)
+
+    log.debug(origin + " moved to " + destination)
+
     return
 
 
@@ -323,7 +348,7 @@ def move_plot_output_to_peak_folder(direction, peak_str):
     return
     
     
-def determine_soh_output_file_location(peak_str, source_name, timestep):
+def determine_accurate_soh_output_file_location(peak_str, source_name, timestep):
     
     import os
     
@@ -332,6 +357,17 @@ def determine_soh_output_file_location(peak_str, source_name, timestep):
     
     log.debug(output_file_location)
     
+    return output_file_location
+
+
+def determine_rough_soh_output_file_location(peak_str, source_name, timestep):
+    import os
+
+    cwd = os.getcwd()
+    output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + ".find_centre_" + peak_str + ".ft"
+
+    log.debug(output_file_location)
+
     return output_file_location
 
 
@@ -657,3 +693,24 @@ def calc_compression_ratio(compressed_k, uncompressed_k):
     log.debug(compression_ratio)
 
     return compression_ratio
+
+
+def apply_compression_ratio_to_pos_est(pos_est, gsqr_est, compression_ratio):
+
+    import copy
+
+    compressed_pos_est = copy.deepcopy(pos_est)
+    compressed_gsqr_est = copy.deepcopy(gsqr_est)
+
+    for i, pos in enumerate(compressed_pos_est):
+
+        for j, compression in enumerate(compression_ratio):
+
+            pos[j] = pos[j] * compression
+
+        compressed_gsqr_est[i] = (pos[0] ** 2) + (pos[1] ** 2) + (pos[2] ** 2)
+
+    return compressed_pos_est, compressed_gsqr_est
+
+
+

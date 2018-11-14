@@ -1,4 +1,4 @@
-def run(gsqr, ln_intensity, pos_est, temperature, mass):
+def run(gsqr, ln_intensity, raw_pos_est, temperature, mass):
 
     import units as un
 
@@ -25,7 +25,7 @@ def run(gsqr, ln_intensity, pos_est, temperature, mass):
         current_peak_list = []
         current_intensity_list = []
 
-        for j, pos in enumerate(pos_est):
+        for j, pos in enumerate(raw_pos_est):
 
             if un.find_if_vectors_parallel(direction, pos) is True:
 

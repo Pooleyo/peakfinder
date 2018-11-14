@@ -12,7 +12,7 @@ def run(peak_str, peak_centre, source_name, timestep):
 
     for i, current_peak_str in enumerate(peak_str):
 
-        data_filename = un.determine_soh_output_file_location(current_peak_str, source_name, timestep)
+        data_filename = un.determine_accurate_soh_output_file_location(current_peak_str, source_name, timestep)
 
         soh_output = un.read_from_soh_output(data_filename)
 

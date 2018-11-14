@@ -10,7 +10,13 @@ def run(run_soh, lineout_directions, undershoot, overshoot, source, mass, a_latt
 
     direction_str = ["kx", "ky", "kz"]
 
-    un.make_lineout_directory()
+    if os.path.exists("./data/lineouts/"):
+
+        pass
+
+    else:
+
+        un.make_lineout_directory()
 
     for i, direction in enumerate(lineout_directions):
 

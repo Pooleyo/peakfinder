@@ -1,4 +1,4 @@
-def run(pos, source_name, timestep):
+def run(raw_pos_est, source_name, timestep):
 
     import units as un
     import logging as log
@@ -11,11 +11,11 @@ def run(pos, source_name, timestep):
 
     integrated_intensity = []
 
-    for i in pos:
+    for i in raw_pos_est:
 
         peak_str = un.make_peak_str(i)
 
-        soh_output_file_location = un.determine_soh_output_file_location(peak_str, source_name, timestep)
+        soh_output_file_location = un.determine_accurate_soh_output_file_location(peak_str, source_name, timestep)
 
         soh_output = un.read_from_soh_output(soh_output_file_location)
 

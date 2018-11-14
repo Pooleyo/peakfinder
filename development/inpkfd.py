@@ -4,15 +4,18 @@ make_peak_plots = True
 num_cores = 2
 
 # Input for "select_peak_positions"
-gsqr_max = 20
+gsqr_max = 81
 negative_k = False
 remove_000 = False
 
 # Input for "find_compression_ratio"
 uncompressed_peak_positions = [[2.0, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 2.0]]
-undershoot = 0.5
-overshoot = 1.5
+undershoot = 0.9
+overshoot = 1.1
 lineout_k_steps = 1e4 + 1
+
+# Input for "fit_to_peaks"
+k_steps_find_centre = 3
 
 # Input for "use_soh_for_3DFT"
 source_name = "uncompressed_cu_300K_5x5x60_10000.atom"

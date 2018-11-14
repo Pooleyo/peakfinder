@@ -9,7 +9,7 @@ def run(pos_est, source_location, mass, a_lattice, N_atoms, k_steps, run_soh):
     
     for i in pos_est:
         peak_str = un.make_peak_str(i)
-        input_file_location = un.determine_soh_input_file_location(peak_str)
+        input_file_location = un.determine_accurate_soh_input_file_location(peak_str)
         k_start = un.find_k_start(i, offset)
         k_stop = un.find_k_stop(i, offset)
         k_start = un.convert_to_per_angstrom(k_start, a_lattice)
@@ -19,7 +19,7 @@ def run(pos_est, source_location, mass, a_lattice, N_atoms, k_steps, run_soh):
     if run_soh == True:
     
         for i in pos_est:
-            input_file_location = un.determine_soh_input_file_location(peak_str)
+            input_file_location = un.determine_accurate_soh_input_file_location(peak_str)
             un.run_soh(input_file_location)
     
     log.debug("Brick %s finished.\n", __name__)

@@ -15,14 +15,18 @@ def run():
 
     log.info("Path %s started.\n", __name__)
 
-    pos_est, gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000)
+    raw_pos_est, raw_gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000)
 
-    peak_str = build_datafile_structure.run(pos_est)
+    current_pos_est = raw_pos_est
 
-    use_soh_for_3DFT.run(pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice, ip.N_atoms, ip.k_steps,
+    current_gsqr_est = raw_gsqr_est
+
+    peak_str = build_datafile_structure.run(raw_pos_est)
+
+    use_soh_for_3DFT.run(current_pos_est, raw_pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice, ip.N_atoms, ip.k_steps,
                          ip.run_soh, ip.num_cores)
 
-    peak_centre, integrated_intensity = calc_peak_intensities.run(pos_est, ip.source_name, ip.timestep)
+    peak_centre, integrated_intensity = calc_peak_intensities.run(raw_pos_est, ip.source_name, ip.timestep)
 
     debye_temperature, temperature, gsqr_per_angstrom, ln_intensity = calc_debye_waller.run(
         peak_centre, integrated_intensity, ip.a_lattice, ip.mass,
@@ -32,9 +36,9 @@ def run():
         ip.triple_term_model_gamma_0_values,
         ip.triple_term_model_constants)
 
-    write_output_files.run(debye_temperature, temperature, pos_est, peak_centre, gsqr_per_angstrom, integrated_intensity, ln_intensity)
+    write_output_files.run(debye_temperature, temperature, raw_pos_est, peak_centre, gsqr_per_angstrom, integrated_intensity, ln_intensity)
 
-    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, pos_est, ip.temperature, ip.mass)
+    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, raw_pos_est, ip.temperature, ip.mass)
 
     if ip.make_peak_plots is True:
 
