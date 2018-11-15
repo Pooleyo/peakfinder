@@ -156,7 +156,7 @@ def make_peak_str(i):
     return peak_str
         
         
-def find_k_start(pos_element, offset):
+def find_simple_k_start(pos_element, offset):
 
     k_start = [pos_element[0] - offset[0], pos_element[1] - offset[1], pos_element[2] - offset[2]]
 
@@ -174,6 +174,7 @@ def find_k_stop(pos_element, offset):
     return k_stop
 
 
+
 def calc_lineout_k_start_stop(uncompressed_peak_centre, under_shoot, over_shoot):
 
     k_start = [uncompressed_peak_centre[0] * under_shoot, uncompressed_peak_centre[1] * under_shoot, uncompressed_peak_centre[2] * under_shoot]
@@ -185,12 +186,35 @@ def calc_lineout_k_start_stop(uncompressed_peak_centre, under_shoot, over_shoot)
     return k_start, k_stop
 
 
-def determine_soh_1DFT_input_file_location(direction):
+def calc_peak_edge_k_start_stop(predicted_peak_centre, under_shoot, over_shoot):
+
+    k_start = [predicted_peak_centre[0] - under_shoot, predicted_peak_centre[1] - under_shoot, predicted_peak_centre[2] - under_shoot]
+    k_stop = [predicted_peak_centre[0] + over_shoot, predicted_peak_centre[1] + over_shoot, predicted_peak_centre[2] + over_shoot]
+
+    log.debug(k_start)
+    log.debug(k_stop)
+
+    return k_start, k_stop
+
+
+def determine_soh_compression_finding_input_file_location(direction):
 
     import os
 
     cwd = os.getcwd()
     input_file_location = cwd + "/data/lineouts/" + direction + "_lineout.in"
+
+    log.debug(input_file_location)
+
+    return input_file_location
+
+
+def determine_soh_edge_finding_input_file_location(direction, peak_str):
+
+    import os
+
+    cwd = os.getcwd()
+    input_file_location = cwd + "/data/" + peak_str + "/" + direction + "_lineout.in"
 
     log.debug(input_file_location)
 
@@ -220,7 +244,18 @@ def determine_rough_soh_input_file_location(peak_str):
     return input_file_location
 
 
-def write_soh_input_1DFT(source_name, file_destination, direction_str, mass, a_lattice, k_start, k_stop, k_steps):
+def determine_rough_lineout_soh_input_file_location(peak_str):
+    import os
+
+    cwd = os.getcwd()
+    input_file_location = cwd + "/data/" + peak_str + "/find_edge_" + peak_str + ".in"
+
+    log.debug(input_file_location)
+
+    return input_file_location
+
+
+def write_soh_input_1DFT(source_name, file_destination, appended_string, mass, a_lattice, k_start, k_stop, k_steps):
 
     import os
     cwd = os.getcwd()
@@ -228,7 +263,7 @@ def write_soh_input_1DFT(source_name, file_destination, direction_str, mass, a_l
     string_to_write = ("VERBOSE 0"
                        + "\nFILE_TYPE lammps-multi"
                        + "\nDATA_FILE " + str(source_location)
-                       + "\nAPPEND_FILE_NAME lineout_" + str(direction_str)
+                       + "\nAPPEND_FILE_NAME " + str(appended_string)
                        + "\nPLOT_OUTPUT pdf"
                        + "\nCOORDS_SCALED"
                        + "\nSET_MASS " + str(mass)
@@ -380,7 +415,29 @@ def determine_soh_1DFT_output_file_location(direction_str, source_name, timestep
     log.debug(output_file_location)
 
     return output_file_location
-    
+
+
+def determine_soh_edge_finding_output_file_location(peak_str, direction_str, source_name, timestep):
+    import os
+
+    cwd = os.getcwd()
+    output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + "." + peak_str + "_find_edges_" + direction_str + ".ft"
+
+    log.debug(output_file_location)
+
+    return output_file_location
+
+
+def determine_edge_finding_soh_output_file_location(direction_str, source_name, timestep):
+    import os
+
+    cwd = os.getcwd()
+    output_file_location = cwd + "/data/lineouts/" + source_name + "." + timestep + ".lineout_" + direction_str + ".ft"
+
+    log.debug(output_file_location)
+
+    return output_file_location
+
 
 def read_from_soh_output(filename):
 
@@ -713,4 +770,48 @@ def apply_compression_ratio_to_pos_est(pos_est, gsqr_est, compression_ratio):
     return compressed_pos_est, compressed_gsqr_est
 
 
+def find_k_start_stop_for_peak_from_first_minima(k_data, intensity):
 
+    centre_index = len(k_data)/2
+
+    for i, k in enumerate(k_data):
+
+        if centre_index - i == 0:
+
+            print "Couldn't find intensity minimum for k_start."
+
+            exit()
+
+        intensity_diff = intensity[centre_index - i] - intensity[centre_index - i - 1]
+
+        if intensity_diff >= 0.0:
+
+            continue
+
+        elif intensity_diff < 0.0:
+
+            k_start = k_data[centre_index - i]
+
+            break
+
+    for i, k in enumerate(k_data):
+
+        if centre_index + i == (len(k_data) - 1):
+
+            print "Couldn't find intensity minimum for k_stop."
+
+            exit()
+
+        intensity_diff = intensity[centre_index + i] - intensity[centre_index + i + 1]
+
+        if intensity_diff >= 0.0:
+
+            continue
+
+        elif intensity_diff <= 0.0:
+
+            k_stop = k_data[centre_index + i]
+
+            break
+
+    return k_start, k_stop

@@ -3,7 +3,7 @@ def run(run_soh, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mas
     import units as un
     import copy
 
-    print "Fitting to peaks..."
+    print "Fitting to peak centres..."
 
     fitted_pos_est = copy.deepcopy(pos_est)
 
@@ -13,7 +13,7 @@ def run(run_soh, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mas
 
     for i, pos in enumerate(compressed_pos_est):
 
-        k_start = un.find_k_start(pos, offset)
+        k_start = un.find_simple_k_start(pos, offset)
 
         k_stop = un.find_k_stop(pos, offset)
 

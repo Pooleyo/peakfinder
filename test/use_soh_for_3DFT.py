@@ -10,7 +10,7 @@ def run(pos_est, source_location, mass, a_lattice, N_atoms, k_steps, run_soh):
     for i in pos_est:
         peak_str = un.make_peak_str(i)
         input_file_location = un.determine_accurate_soh_input_file_location(peak_str)
-        k_start = un.find_k_start(i, offset)
+        k_start = un.find_simple_k_start(i, offset)
         k_stop = un.find_k_stop(i, offset)
         k_start = un.convert_to_per_angstrom(k_start, a_lattice)
         k_stop = un.convert_to_per_angstrom(k_stop, a_lattice)

@@ -4,12 +4,14 @@ def run():
 
     import select_peak_positions
     import build_datafile_structure
-    import use_soh_for_3DFT
+    import use_static_peakfinding_for_3DFT
     import calc_peak_intensities
     import calc_debye_waller
     import write_output_files
     import plot_debye_waller
     import plot_peaks
+    import find_compression_ratio
+    import apply_compression_ratio
 
     import logging as log
 
@@ -23,8 +25,21 @@ def run():
 
     peak_str = build_datafile_structure.run(raw_pos_est)
 
-    use_soh_for_3DFT.run(current_pos_est, raw_pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice, ip.N_atoms, ip.k_steps,
-                         ip.run_soh, ip.num_cores)
+    compression_ratio = find_compression_ratio.run(ip.run_soh, ip.uncompressed_peak_positions,
+                                                   ip.compression_ratio_undershoot,
+                                                   ip.compression_ratio_overshoot, ip.source_name, ip.mass,
+                                                   ip.a_lattice,
+                                                   ip.lineout_k_steps, ip.num_cores, ip.timestep)
+
+    compressed_pos_est, compressed_gsqr_est = apply_compression_ratio.run(current_pos_est, current_gsqr_est,
+                                                                          compression_ratio)
+
+    current_pos_est = compressed_pos_est
+
+    current_gsqr_est = compressed_gsqr_est
+
+    use_static_peakfinding_for_3DFT.run(current_pos_est, raw_pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice, ip.N_atoms, ip.k_steps,
+                                        ip.run_soh, ip.num_cores)
 
     peak_centre, integrated_intensity = calc_peak_intensities.run(raw_pos_est, ip.source_name, ip.timestep)
 

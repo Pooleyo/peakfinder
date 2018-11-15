@@ -1,4 +1,4 @@
-def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, N_atoms, k_steps, run_soh, num_cores):
+def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, k_steps, run_soh, num_cores, k_start, k_stop):
 
     import units as un
     import logging as log
@@ -7,19 +7,13 @@ def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, N_atom
 
     print "Performing accurate 3DFT of each peak..."
 
-    offset = un.calc_k_offset_with_N_atoms(N_atoms)
-    
     for i, pos in enumerate(current_pos_est):
-
-        k_start = un.find_k_start(pos, offset)
-
-        k_stop = un.find_k_stop(pos, offset)
 
         peak_str = un.make_peak_str(pos_est[i])
 
         input_file_location = un.determine_accurate_soh_input_file_location(peak_str)
 
-        un.write_soh_input_3DFT(source_name, input_file_location, peak_str, mass, a_lattice, k_steps, k_start, k_stop)
+        un.write_soh_input_3DFT(source_name, input_file_location, peak_str, mass, a_lattice, k_steps, k_start[i], k_stop[i])
 
     if run_soh is True:
     
@@ -34,5 +28,5 @@ def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, N_atom
             un.move_soh_accurate_output_to_peak_folder(peak_str, source_name, timestep)
 
     log.debug("Brick %s finished.\n", __name__)
-        
+
     return

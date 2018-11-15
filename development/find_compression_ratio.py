@@ -6,7 +6,7 @@ def run(run_soh, lineout_directions, undershoot, overshoot, source, mass, a_latt
 
     print "Finding compression ratios..."
 
-    compression_ratio = [0.0, 1.0, 1.0]
+    compression_ratio = [1.0, 1.0, 1.0]
 
     direction_str = ["kx", "ky", "kz"]
 
@@ -22,15 +22,15 @@ def run(run_soh, lineout_directions, undershoot, overshoot, source, mass, a_latt
 
         k_start, k_stop = un.calc_lineout_k_start_stop(direction, undershoot, overshoot)
 
-        soh_location = un.determine_soh_1DFT_input_file_location(direction_str[i])
+        soh_location = un.determine_soh_compression_finding_input_file_location(direction_str[i])
 
-        un.write_soh_input_1DFT(source, soh_location, direction_str[i], mass, a_lattice, k_start, k_stop, lineout_k_steps)
+        un.write_soh_input_1DFT(source, soh_location, "lineout_" + direction_str[i], mass, a_lattice, k_start, k_stop, lineout_k_steps)
 
     if run_soh is True:
 
         for i, direction in enumerate(lineout_directions):
 
-            soh_location = un.determine_soh_1DFT_input_file_location(direction_str[i])
+            soh_location = un.determine_soh_compression_finding_input_file_location(direction_str[i])
 
             un.run_soh(soh_location, num_cores)
 
