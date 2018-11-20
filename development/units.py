@@ -815,3 +815,16 @@ def find_k_start_stop_for_peak_from_first_minima(k_data, intensity):
             break
 
     return k_start, k_stop
+
+
+def calc_overstepped_k_start_k_stop(pos, undershoot, overshoot):
+
+    k_start = [0.0, 0.0, 0.0]
+    k_stop = [0.0, 0.0, 0.0]
+
+    for i, k in enumerate(pos):
+
+        k_start[i] = k - undershoot[i]
+        k_stop[i] = k + overshoot[i]
+
+    return k_start, k_stop

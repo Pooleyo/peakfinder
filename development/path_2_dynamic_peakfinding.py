@@ -12,7 +12,7 @@ def run():
     import plot_peaks
     import find_compression_ratio
     import fit_to_peak_centres
-    import fit_to_peak_edges
+    import overstep_peak_edges
 
     import logging as log
 
@@ -37,8 +37,7 @@ def run():
 
     current_pos_est = fitted_pos_est
 
-    k_start_accurate, k_stop_accurate = fit_to_peak_edges.run(ip.run_soh, current_pos_est, raw_pos_est, ip.source_name, ip.timestep, ip.peak_edge_undershoot,
-                          ip.peak_edge_overshoot, ip.source_name, ip.mass, ip.a_lattice, ip.peak_edge_k_steps, ip.num_cores)
+    k_start_accurate, k_stop_accurate = overstep_peak_edges.run(current_pos_est, ip.peak_edge_undershoot, ip.peak_edge_overshoot)
 
     use_dynamic_peakfinding_for_3DFT.run(current_pos_est, raw_pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice,
                                         ip.k_steps, ip.run_soh, ip.num_cores, k_start_accurate, k_stop_accurate)
