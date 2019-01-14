@@ -13,11 +13,19 @@ def run():
     import find_compression_ratio
     import fit_to_peak_centres
     import overstep_peak_edges
+    import calc_md_temperature
 
     import logging as log
 
     log.info("Path %s started.\n", __name__)
 
+    current_md_temperature = ip.temperature
+
+    if ip.calc_md_temperature_from_dump_file is True:
+
+        current_md_temperature = calc_md_temperature.run(ip.source_name, ip.temperature, ip.calculated_temperature_dimensionality, ip.mass, ip.velocity_columns, ip.number_velocity_bins)
+        print current_md_temperature
+        exit()
     raw_pos_est, raw_gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000)
 
     current_pos_est = raw_pos_est
@@ -44,18 +52,18 @@ def run():
 
     peak_centre, integrated_intensity = calc_peak_intensities.run(raw_pos_est, ip.source_name, ip.timestep)
 
-    debye_temperature, temperature, gsqr_per_angstrom, ln_intensity = calc_debye_waller.run(
+    debye_temperature, xrd_temperature, gsqr_per_angstrom, ln_intensity = calc_debye_waller.run(
         peak_centre, integrated_intensity, ip.a_lattice, ip.mass,
-        ip.temperature, ip.uncompressed_debye_temperature,
+        current_md_temperature, ip.uncompressed_debye_temperature,
         ip.single_term_model_gamma_0_values,
         ip.single_term_model_exponent_values,
         ip.triple_term_model_gamma_0_values,
         ip.triple_term_model_constants)
 
-    write_output_files.run(debye_temperature, temperature, current_pos_est, peak_centre, gsqr_per_angstrom,
+    write_output_files.run(debye_temperature, xrd_temperature, current_pos_est, peak_centre, gsqr_per_angstrom,
                            integrated_intensity, ln_intensity)
 
-    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, current_pos_est, ip.temperature, ip.mass)
+    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, current_pos_est, current_md_temperature, ip.mass)
 
     if ip.make_peak_plots is True:
 

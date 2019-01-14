@@ -38,12 +38,18 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass):
 
         un.plot_matplotlib(current_peak_list, current_intensity_list, direction_plot_filenames[i], x_label, y_label, plot_title)
 
-        slope, constant = un.calc_line_slope_and_constant(current_peak_list, current_intensity_list)
+        if len(current_peak_list) and len(current_intensity_list) is not 0:
 
-        debye_waller_constant = un.calc_debye_waller_constant(mass)
+            slope, constant = un.calc_line_slope_and_constant(current_peak_list, current_intensity_list)
 
-        debye_temperature_xrd = un.calc_debye_temperature_xrd(temperature, slope, debye_waller_constant)
+            debye_waller_constant = un.calc_debye_waller_constant(mass)
 
-        un.write_temperatures_to_file(debye_temperature_xrd, temperature, direction_result_filenames[i])
+            debye_temperature_xrd = un.calc_debye_temperature_xrd(temperature, slope, debye_waller_constant)
+
+            un.write_temperatures_to_file(debye_temperature_xrd, temperature, direction_result_filenames[i])
+
+        else:
+
+            print "No peaks found along " + str(direction)
 
     return

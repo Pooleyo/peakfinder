@@ -1,0 +1,38 @@
+# INITIALISATION
+
+units metal
+pair_style eam/alloy
+
+#defaults
+dimension 3
+boundary p p p
+atom_style atomic
+
+# ATOM DEFINITION
+
+lattice fcc 3.6288
+
+variable x equal 5
+variable y equal 5
+variable z equal 5
+
+region simbox block 0 $x 0 $y 0 $z
+create_box 1 simbox
+create_atoms 1 box
+
+# SETTINGS
+
+pair_coeff * * /data/code/potentials/Cu_mishin1.eam.alloy Cu
+velocity all create 450.0 629 dist gaussian
+fix 1 all nvt temp 450.0 450.0 0.1
+
+dump myDump all custom 10000 uncompressed_450K_*.atom id type xs ys zs vx vy vz 
+
+#defaults
+timestep 0.001
+
+# RUN
+
+# thermalisng for 10 ps
+run 10000
+

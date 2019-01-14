@@ -710,11 +710,11 @@ def find_if_vectors_parallel(v_1, v_2):
 
     length_2 = np.linalg.norm(v_2)
 
-    if length_1 < 0.000001:
+    if length_1 < 0.001:
 
         result = False
 
-    elif length_2 < 0.00001:
+    elif length_2 < 0.001:
 
         result = False
 
@@ -828,3 +828,70 @@ def calc_overstepped_k_start_k_stop(pos, undershoot, overshoot):
         k_stop[i] = k + overshoot[i]
 
     return k_start, k_stop
+
+
+def calc_MD_temperature(lammps_file_location, user_input_temperature, temperature_dimensionality, atomic_mass, velocity_columns):
+
+    import numpy as np
+    from scipy.constants import k
+
+    try:
+
+        vx, vy, vz = np.loadtxt("lammps/" + lammps_file_location, skiprows=9, usecols=(velocity_columns[0], velocity_columns[1], velocity_columns[2]), unpack=True)
+
+        number_of_atoms = len(vx)
+
+        velocity_squared = [0] * number_of_atoms
+
+        if temperature_dimensionality is 2:
+
+            for i in range(len(vx)):
+
+                velocity_squared[i] = (vx[i] ** 2) + (vy[i] ** 2)
+
+        elif temperature_dimensionality is 3:
+
+            for i in range(len(vx)):
+
+                velocity_squared[i] = (vx[i] ** 2) + (vy[i] ** 2) + (vz[i] ** 2)
+
+        velocity_squared_sum = sum(velocity_squared)
+
+        MD_temperature = (1.660539040e-27 * 10000 * atomic_mass * velocity_squared_sum) / (temperature_dimensionality * number_of_atoms * k) # The number 1.66054e-27 is to convert the atomic mass from amu to kg. The factor of 100 is to conver the velocities from  Angstrom/ps to m/s.
+
+    except:
+
+        print "######### WARNING: calc_MD_temperature: Could not load values for velocity.\n\tThis could be due to " \
+              + "the LAMMPS file not having enough columns. Check the LAMMPS file has the velocities set to column " \
+              + str(velocity_columns[0]) + ", " + str(velocity_columns[1]) + ", and " \
+              + str(velocity_columns[2]) + " (where 0 corresponds to the first column).\n\tThe user defined temperature" \
+              + " will be used instead: " + str(user_input_temperature) + " K"
+
+        MD_temperature = user_input_temperature
+
+    log.debug(MD_temperature)
+
+    return MD_temperature, velocity_squared
+
+def bin_values(number_of_bins, list_to_bin):
+
+    import numpy as np
+
+    histogram = np.histogram(list_to_bin, number_of_bins)
+
+    log.debug(histogram)
+
+    return histogram
+
+def plot_histogram(histogram, filename, x_label, y_label, plot_title):
+
+    import matplotlib.pyplot as plt
+
+    plt.hist(histogram)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(plot_title)
+    plt.savefig(filename)
+    plt.close()
+
+    return
