@@ -24,8 +24,7 @@ def run():
     if ip.calc_md_temperature_from_dump_file is True:
 
         current_md_temperature = calc_md_temperature.run(ip.source_name, ip.temperature, ip.calculated_temperature_dimensionality, ip.mass, ip.velocity_columns, ip.number_velocity_bins)
-        print current_md_temperature
-        exit()
+
     raw_pos_est, raw_gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000)
 
     current_pos_est = raw_pos_est

@@ -4,12 +4,9 @@ LAMMPS (16 Feb 2016)
 units metal
 pair_style eam/alloy
 
-#defaults
 dimension 3
 boundary p p p
 atom_style atomic
-
-# ATOM DEFINITION
 
 lattice fcc 3.6288
 Lattice spacing in x,y,z = 3.6288 3.6288 3.6288
@@ -24,26 +21,20 @@ region simbox block 0 5 0 5 0 $z
 region simbox block 0 5 0 5 0 5
 create_box 1 simbox
 Created orthogonal box = (0 0 0) to (18.144 18.144 18.144)
-  2 by 2 by 2 MPI processor grid
+  1 by 1 by 1 MPI processor grid
 create_atoms 1 box
 Created 500 atoms
-
-# SETTINGS
 
 pair_coeff * * /data/code/potentials/Cu_mishin1.eam.alloy Cu
 Reading potential file /data/code/potentials/Cu_mishin1.eam.alloy with DATE: 2007-10-12
 velocity all create 450.0 629 dist gaussian
 fix 1 all nvt temp 450.0 450.0 0.1
 
-dump myDump all custom 10000 uncompressed_450K_*.atom id type xs ys zs vx vy vz
+dump myDump all custom 1000 uncompressed_450K_*.atom id type xs ys zs vx vy vz
 
-#defaults
 timestep 0.001
 
-# RUN
-
-# thermalisng for 10 ps
-run 10000
+run 1000
 Neighbor list info ...
   1 neighbor list requests
   update every 1 steps, delay 10 steps, check yes
@@ -51,35 +42,75 @@ Neighbor list info ...
   master list distance cutoff = 7.50679
   ghost atom cutoff = 7.50679
   binsize = 3.75339 -> bins = 5 5 5
-Memory usage per processor = 4.04114 Mbytes
+Memory usage per processor = 4.12636 Mbytes
 Step Temp E_pair E_mol TotEng Press 
        0          450   -1769.7722            0   -1740.7469   -10541.978 
-   10000     419.1803   -1740.8822            0   -1713.8447    13346.061 
-Loop time of 2.39871 on 8 procs for 10000 steps with 500 atoms
+    1000    460.92421   -1744.1717            0   -1714.4417    10416.268 
+Loop time of 1.44934 on 1 procs for 1000 steps with 500 atoms
 
-Performance: 360.193 ns/day, 0.067 hours/ns, 4168.899 timesteps/s
-99.7% CPU use with 8 MPI tasks x 1 OpenMP threads
+Performance: 59.614 ns/day, 0.403 hours/ns, 689.972 timesteps/s
+97.7% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 1.7178     | 1.745      | 1.773      |   1.4 | 72.75
+Pair    | 1.3814     | 1.3814     | 1.3814     |   0.0 | 95.31
 Neigh   | 0          | 0          | 0          |   0.0 |  0.00
-Comm    | 0.49628    | 0.52212    | 0.54802    |   2.4 | 21.77
-Output  | 0.05807    | 0.058072   | 0.058082   |   0.0 |  2.42
-Modify  | 0.040242   | 0.042913   | 0.044872   |   0.7 |  1.79
-Other   |            | 0.03062    |            |       |  1.28
+Comm    | 0.017813   | 0.017813   | 0.017813   |   0.0 |  1.23
+Output  | 0.032598   | 0.032598   | 0.032598   |   0.0 |  2.25
+Modify  | 0.012373   | 0.012373   | 0.012373   |   0.0 |  0.85
+Other   |            | 0.005138   |            |       |  0.35
 
-Nlocal:    62.5 ave 63 max 62 min
-Histogram: 4 0 0 0 0 0 0 0 0 4
-Nghost:    1309.5 ave 1310 max 1309 min
-Histogram: 4 0 0 0 0 0 0 0 0 4
-Neighs:    4375 ave 4428 max 4322 min
-Histogram: 4 0 0 0 0 0 0 0 0 4
+Nlocal:    500 ave 500 max 500 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    2930 ave 2930 max 2930 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    35000 ave 35000 max 35000 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
 
 Total # of neighbors = 35000
 Ave neighs/atom = 70
 Neighbor list builds = 0
 Dangerous builds = 0
 
-Total wall time: 0:00:02
+unfix 1
+fix 2 all nve
+
+thermo 1
+
+dump myDump2 all custom 1 uncompressed_450K_*.atom id type xs ys zs vx vy vz
+
+run 3
+Memory usage per processor = 5.40688 Mbytes
+Step Temp E_pair E_mol TotEng Press 
+    1000    460.92421   -1744.1717            0   -1714.4417    10416.268 
+    1001    460.76948   -1744.1617            0   -1714.4417    10432.995 
+    1002    460.51449   -1744.1452            0   -1714.4417    10454.711 
+    1003    460.16133   -1744.1224            0   -1714.4416    10481.269 
+Loop time of 0.0108531 on 1 procs for 3 steps with 500 atoms
+
+Performance: 23.883 ns/day, 1.005 hours/ns, 276.420 timesteps/s
+110.6% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.0063553  | 0.0063553  | 0.0063553  |   0.0 | 58.56
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 7.2002e-05 | 7.2002e-05 | 7.2002e-05 |   0.0 |  0.66
+Output  | 0.0043759  | 0.0043759  | 0.0043759  |   0.0 | 40.32
+Modify  | 3.4094e-05 | 3.4094e-05 | 3.4094e-05 |   0.0 |  0.31
+Other   |            | 1.574e-05  |            |       |  0.14
+
+Nlocal:    500 ave 500 max 500 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:    2930 ave 2930 max 2930 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    35594 ave 35594 max 35594 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 35594
+Ave neighs/atom = 71.188
+Neighbor list builds = 0
+Dangerous builds = 0
+Total wall time: 0:00:01

@@ -23,8 +23,8 @@ peak_edge_overshoot = [1.0/60.0, 1.0/60.0, 1.0/60.0]
 peak_edge_k_steps = 1e3 + 1
 
 # Input for "use_soh_for_3DFT"
-source_name = "uncompressed_450K_10000.atom"
-timestep = "10000"  # Only used in moving soh output files.
+source_name = "uncompressed_450K_1003.atom"
+timestep = "1003"  # Only used in moving soh output files.
 mass = 63.54999999999999715783  # In amu
 a_lattice = 3.6288  # In Angstroms
 k_steps = 21
@@ -36,7 +36,7 @@ temperature = 300.0
 
 # Input for calc_md_temperature. Simulations must have "units metal" for this calculation to work properly.
 calc_md_temperature_from_dump_file = True
-calculated_temperature_dimensionality = 2  # Enter "3" for 3D temperature, and "2" for temperature calculated from vx
+calculated_temperature_dimensionality = 3  # Enter "3" for 3D temperature, and "2" for temperature calculated from vx
 # and vy only.
 velocity_columns = [5, 6, 7]  # The columns in the lammps dump file that contain vx, vy, vz, respectively. The first
 # column is column number 0.

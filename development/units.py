@@ -869,9 +869,12 @@ def calc_MD_temperature(lammps_file_location, user_input_temperature, temperatur
 
         MD_temperature = user_input_temperature
 
+        velocity_squared = [0]
+
     log.debug(MD_temperature)
 
     return MD_temperature, velocity_squared
+
 
 def bin_values(number_of_bins, list_to_bin):
 
