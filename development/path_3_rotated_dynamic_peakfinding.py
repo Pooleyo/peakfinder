@@ -14,6 +14,7 @@ def run():
     import fit_to_peak_centres
     import overstep_peak_edges
     import calc_md_temperature
+    import rotate_peak_positions_to_z_along_111
 
     import logging as log
 
@@ -32,6 +33,12 @@ def run():
     current_gsqr_est = raw_gsqr_est
 
     peak_str = build_datafile_structure.run(current_pos_est)
+
+    rotated_pos_est, rotated_gsqr_est = rotate_peak_positions_to_z_along_111.run(raw_pos_est, raw_gsqr_est)
+
+    current_pos_est = rotated_pos_est
+
+    current_gsqr_est = rotated_gsqr_est
 
     compression_ratio = find_compression_ratio.run(ip.run_soh, ip.uncompressed_peak_positions, ip.compression_ratio_undershoot,
                                                    ip.compression_ratio_overshoot, ip.source_name, ip.mass, ip.a_lattice,

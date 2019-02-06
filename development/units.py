@@ -886,6 +886,7 @@ def bin_values(number_of_bins, list_to_bin):
 
     return histogram
 
+
 def plot_histogram(histogram, filename, x_label, y_label, plot_title):
 
     import matplotlib.pyplot as plt
@@ -898,3 +899,44 @@ def plot_histogram(histogram, filename, x_label, y_label, plot_title):
     plt.close()
 
     return
+
+
+def create_rotation_matrix_for_111_rotation():
+
+    import numpy as np
+
+    theta_x = np.pi / 2.0 - np.arctan(
+        1 / np.sqrt(2))  # Calculated by looking at a 111 vector which has been rotated by 45 degrees around the z-axis.
+
+    theta_z = np.pi / 4.0  # Rotate around z-axis by 45 degrees.
+
+    rot_x = np.array([[1, 0, 0], [0, np.cos(theta_x), -np.sin(theta_x)], [0, np.sin(theta_x), np.cos(
+        theta_x)]])  # creates the array which rotates the positions around the x-axis i.e. rotation matrix
+
+    rot_z = np.array([[np.cos(theta_z), -np.sin(theta_z), 0], [np.sin(theta_z), np.cos(theta_z), 0], [0, 0,1]])
+    # same as above, this time around z.
+    # Note that we won't create a y-rotation matrix since it isn't needed in this instance of 111.
+
+    return rot_x, rot_z
+
+
+def rotate_pos_est_using_rotation_matrices(pos_est, rot_x, rot_z):
+
+    import numpy as np
+
+    rot_pos_est = [0] * len(pos_est)
+
+    pos_est = np.asarray(pos_est)  # Converts pos_est to an array so we can multiply it by our rotational matrices.
+
+    for i in range(len(pos_est)):  # Loops over all peaks to populate the pos_est list with rotated peak positions.
+
+        new = np.dot(rot_z, pos_est[i])  # First matrix multiply the z-rotation with the original position estimate to
+        # get "new", an intermediate variable.
+
+        new_2 = np.dot(rot_x, new)  # Then matrix multiply the x-rotation with "new" to get the array version of the
+        # rotated peak.
+
+        rot_pos_est[i] = list(new_2)  # Convert this to a list (for compatability with the rest of the code).
+
+    return rot_pos_est
+

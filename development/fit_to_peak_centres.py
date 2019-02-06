@@ -1,4 +1,4 @@
-def run(run_soh, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mass, a_lattice, k_steps_find_centre, num_cores, timestep):
+def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mass, a_lattice, k_steps_find_centre, num_cores, timestep):
 
     import units as un
     import copy
@@ -17,7 +17,7 @@ def run(run_soh, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mas
 
         k_stop = un.find_k_stop(pos, offset)
 
-        peak_str = un.make_peak_str(pos_est[i])
+        peak_str = un.make_peak_str(raw_pos_est[i])
 
         input_file_location = un.determine_rough_soh_input_file_location(peak_str)
 
@@ -27,7 +27,7 @@ def run(run_soh, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mas
 
         for i, pos in enumerate(compressed_pos_est):
 
-            peak_str = un.make_peak_str(pos_est[i])
+            peak_str = un.make_peak_str(raw_pos_est[i])
 
             input_file_location = un.determine_rough_soh_input_file_location(peak_str)
 
@@ -37,7 +37,7 @@ def run(run_soh, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mas
 
     for i, pos in enumerate(compressed_pos_est):
 
-        peak_str = un.make_peak_str(pos_est[i])
+        peak_str = un.make_peak_str(raw_pos_est[i])
 
         soh_output_file_location = un.determine_rough_soh_output_file_location(peak_str, source_name, timestep)
 
