@@ -16,20 +16,20 @@ compression_ratio_overshoot = 1.5
 lineout_k_steps = 1e4 + 1
 
 # Input for "fit_to_peak_centres"
-k_steps_find_centre = 21
+k_steps_find_centre = 11
 
 # Input for "fit_to_peak_edges"
-peak_edge_undershoot = [1.0/20.0, 1.0/20.0, 1.0/20.0]
-peak_edge_overshoot = [1.0/20.0, 1.0/20.0, 1.0/20.0]
+peak_edge_undershoot = [1.0/5.0, 1.0/5.0, 1.0/5.0]
+peak_edge_overshoot = [1.0/5.0, 1.0/5.0, 1.0/5.0]
 peak_edge_k_steps = 1e3 + 1
 
 # Input for "use_soh_for_3DFT"
-source_name = "cu_300K_N20_uncompressed_111_10000.atom"
-timestep = "10000"  # Only used in moving soh output files.
+source_name = "uncompressed_450K_1000.atom"
+timestep = "1000"  # Only used in moving soh output files.
 mass = 63.54999999999999715783  # In amu
 a_lattice = 3.6288  # In Angstroms
-k_steps = 21
-N_atoms = [20, 20, 20]
+k_steps = 11
+N_atoms = [5, 5, 5]
 
 # Input for use by "calc_debye_waller"
 uncompressed_debye_temperature = 320.0

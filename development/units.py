@@ -441,9 +441,12 @@ def determine_edge_finding_soh_output_file_location(direction_str, source_name, 
 
 def read_from_soh_output(filename):
 
-    import numpy as np
+    import pandas as pd
 
-    kx, ky, kz, intensity = np.loadtxt(filename, skiprows=1, usecols=(0,1,2,5), unpack=True)    
+    data = pd.read_csv(filename, skiprows=1, delimiter=" ", names=["#kx", "ky", "kz", "intensity"])
+
+    kx, ky, kz, intensity = data.T.values
+
     soh_output = [kx, ky, kz, intensity]
 
     log.debug(soh_output)
