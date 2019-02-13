@@ -62,7 +62,7 @@ def run():
     write_output_files.run(debye_temperature, xrd_temperature, current_pos_est, peak_centre, gsqr_per_angstrom,
                            integrated_intensity, ln_intensity)
 
-    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, current_pos_est, current_md_temperature, ip.mass)
+    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, raw_pos_est, current_md_temperature, ip.mass)
 
     if ip.make_peak_plots is True:
 

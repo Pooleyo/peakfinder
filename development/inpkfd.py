@@ -1,35 +1,35 @@
-path = "path_3_rotated_dynamic_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding",
+path = "path_2_dynamic_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding",
 # "path_3_rotated_dynamic_peakfinding"
 run_soh = True
 make_peak_plots = True
-num_cores = 2
+num_cores = 3
 
 # Input for "select_peak_positions"
-gsqr_max = 81
+gsqr_max = 31
 negative_k = False
 remove_000 = False
 
 # Input for "find_compression_ratio"
-uncompressed_peak_positions = [[1.4142135623730951, 0.81649658092772592, 1.1547005383792515], [-1.4142135623730949, 0.81649658092772603, 1.1547005383792517], [0.0, -1.6329931618554521, 1.1547005383792515]]
+uncompressed_peak_positions = [[2.0, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 2.0]] #[[1.4142135623730951, 0.81649658092772592, 1.1547005383792515], [-1.4142135623730949, 0.81649658092772603, 1.1547005383792517], [0.0, -1.6329931618554521, 1.1547005383792515]]
 compression_ratio_undershoot = 0.9
 compression_ratio_overshoot = 1.5
-lineout_k_steps = 1e4 + 1
+lineout_k_steps = 1e3 + 1
 
 # Input for "fit_to_peak_centres"
 k_steps_find_centre = 11
 
 # Input for "fit_to_peak_edges"
-peak_edge_undershoot = [1.0/5.0, 1.0/5.0, 1.0/5.0]
-peak_edge_overshoot = [1.0/5.0, 1.0/5.0, 1.0/5.0]
+peak_edge_undershoot = [1.0/60.0, 1.0/60.0, 1.0/60.0]
+peak_edge_overshoot = [1.0/60.0, 1.0/60.0, 1.0/60.0]
 peak_edge_k_steps = 1e3 + 1
 
 # Input for "use_soh_for_3DFT"
-source_name = "uncompressed_450K_1000.atom"
-timestep = "1000"  # Only used in moving soh output files.
+source_name = "uncompressed_300K_N60_10000.atom"
+timestep = "10000"  # Only used in moving soh output files.
 mass = 63.54999999999999715783  # In amu
 a_lattice = 3.6288  # In Angstroms
 k_steps = 11
-N_atoms = [5, 5, 5]
+N_atoms = [60, 60, 60]
 
 # Input for use by "calc_debye_waller"
 uncompressed_debye_temperature = 320.0
