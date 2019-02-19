@@ -1,4 +1,4 @@
-def run(gsqr, ln_intensity, raw_pos_est, temperature, mass):
+def run(gsqr, ln_intensity, raw_pos_est, temperature, mass, plotting_directions):
 
     import units as un
 
@@ -13,8 +13,6 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass):
     plot_title = "Intensity vs. G$^2$"
 
     un.plot_matplotlib(gsqr, ln_intensity, filename, x_label, y_label, plot_title)
-
-    plotting_directions = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
 
     direction_plot_filenames = ["parallel_x.png", "parallel_y.png", "parallel_z.png"]
 
@@ -46,7 +44,7 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass):
 
             debye_temperature_xrd = un.calc_debye_temperature_xrd(temperature, slope, debye_waller_constant)
 
-            un.write_temperatures_to_file(debye_temperature_xrd, temperature, direction_result_filenames[i])
+            un.write_directional_temperatures_to_file(debye_temperature_xrd, temperature, direction_result_filenames[i])
 
         else:
 

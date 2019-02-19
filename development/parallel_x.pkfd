@@ -1,2 +1,2 @@
-Debye temperature				313.977641028
-Temperature						300.0
+XRD Debye temperature (using slope of ln(I) vs. G^2 and temperature calculated from MD)				511.595563157
+Temperature from MD						1901.94979606

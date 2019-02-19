@@ -1,2 +1,3 @@
-Debye temperature				511.432389074
-Temperature						[2010.5031421505646, 2865.4543323892458, 26729.528084760648, 1994.1614554537266]
+XRD Debye temperature (using slope of ln(I) vs. G^2 and temperature calculated from MD)				511.432389074
+Debye temperature as modelled, using calculated compression											[525.82482022792601, 627.74816172653914, 1917.2747358867719, 523.68346649060629]
+Temperature (using slope of ln(I) vs. G^2 and 4 models of Debye temperature)						[2010.5031421505646, 2865.4543323892458, 26729.528084760648, 1994.1614554537266]

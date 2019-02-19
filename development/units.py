@@ -680,12 +680,27 @@ def find_line_data_from_3DFT(constant_axes, variable_axis, centre_point, soh_out
     return line_points, line_intensity
 
 
-def write_temperatures_to_file(debye_temperature, temperature, filename_temperatures):
+def write_temperatures_to_file(debye_temperature, temperature, model_debye_temperatures, filename_temperatures):
 
     f = open(filename_temperatures, "w")
     f.write(
-        "Debye temperature\t\t\t\t" + str(debye_temperature) + "\n"
-        "Temperature\t\t\t\t\t\t" + str(temperature)
+        "XRD Debye temperature (using slope of ln(I) vs. G^2 and temperature calculated from MD)\t\t\t\t" + str(debye_temperature) + "\n"
+        "Debye temperature as modelled, using calculated compression\t\t\t\t\t\t\t\t\t\t\t" + str(model_debye_temperatures) + "\n"
+        "Temperature (using slope of ln(I) vs. G^2 and 4 models of Debye temperature)\t\t\t\t\t\t" + str(temperature)
+    )
+    f.close()
+
+    log.debug(filename_temperatures)
+
+    return
+
+
+def write_directional_temperatures_to_file(debye_temperature, temperature, filename_temperatures):
+
+    f = open(filename_temperatures, "w")
+    f.write(
+        "XRD Debye temperature (using slope of ln(I) vs. G^2 and temperature calculated from MD)\t\t\t\t" + str(debye_temperature) + "\n"
+        "Temperature from MD\t\t\t\t\t\t" + str(temperature)
     )
     f.close()
 

@@ -1,7 +1,7 @@
 path = "path_3_rotated_dynamic_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding",
 # "path_3_rotated_dynamic_peakfinding"
-run_soh = True
-make_peak_plots = True
+run_soh = False
+make_peak_plots = False
 num_cores = 8
 
 N_atoms = [100, 100, 100]

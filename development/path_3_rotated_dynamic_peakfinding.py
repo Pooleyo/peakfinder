@@ -58,7 +58,7 @@ def run():
 
     peak_centre, integrated_intensity = calc_peak_intensities.run(raw_pos_est, ip.source_name, ip.timestep)
 
-    debye_temperature, xrd_temperature, gsqr_per_angstrom, ln_intensity = calc_debye_waller.run(
+    debye_temperature, xrd_temperature, model_debye_temperatures, gsqr_per_angstrom, ln_intensity = calc_debye_waller.run(
         peak_centre, integrated_intensity, ip.a_lattice, ip.mass,
         current_md_temperature, ip.uncompressed_debye_temperature,
         ip.single_term_model_gamma_0_values,
@@ -66,10 +66,10 @@ def run():
         ip.triple_term_model_gamma_0_values,
         ip.triple_term_model_constants, compression_ratio)
 
-    write_output_files.run(debye_temperature, xrd_temperature, current_pos_est, peak_centre, gsqr_per_angstrom,
+    write_output_files.run(debye_temperature, xrd_temperature, model_debye_temperatures, current_pos_est, peak_centre, gsqr_per_angstrom,
                            integrated_intensity, ln_intensity)
 
-    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, rotated_pos_est, current_md_temperature, ip.mass)
+    plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, rotated_pos_est, current_md_temperature, ip.mass, ip.uncompressed_peak_positions)
 
     if ip.make_peak_plots is True:
 
