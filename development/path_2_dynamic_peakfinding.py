@@ -57,7 +57,7 @@ def run():
         ip.single_term_model_gamma_0_values,
         ip.single_term_model_exponent_values,
         ip.triple_term_model_gamma_0_values,
-        ip.triple_term_model_constants)
+        ip.triple_term_model_constants, compression_ratio)
 
     write_output_files.run(debye_temperature, xrd_temperature, current_pos_est, peak_centre, gsqr_per_angstrom,
                            integrated_intensity, ln_intensity)

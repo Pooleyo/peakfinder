@@ -591,7 +591,7 @@ def calc_debye_temperature_from_triple_term_gruneisen_model(debye_temperature_30
 
 def calc_volume_lattice_units(a_lattice, compression_factors):
 
-    volume = a_lattice ** 3 * (compression_factors[0] * compression_factors[1] * compression_factors[2])
+    volume = (a_lattice ** 3) * (compression_factors[0] * compression_factors[1] * compression_factors[2])
 
     log.debug(volume)
 

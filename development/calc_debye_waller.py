@@ -1,4 +1,4 @@
-def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye_temperature, single_term_model_gamma_0_values, single_term_model_q_values, triple_term_model_gamma_0_values, triple_term_constant_values):
+def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye_temperature, single_term_model_gamma_0_values, single_term_model_q_values, triple_term_model_gamma_0_values, triple_term_constant_values, compression_ratio):
 
     import units as un
     import logging as log
@@ -29,7 +29,7 @@ def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye
 
     initial_volume = un.calc_volume_lattice_units(a_lattice, [1.0, 1.0, 1.0])
 
-    compression_factors = [1.0, 1.0, 1.0]
+    compression_factors = [1.0/compression_ratio[0], 1.0/compression_ratio[1], 1.0/compression_ratio[2]]
 
     final_volume = un.calc_volume_lattice_units(a_lattice, compression_factors)
 
