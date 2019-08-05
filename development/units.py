@@ -612,9 +612,11 @@ def plot_matplotlib(x, y, filename, x_label, y_label, plot_title):
     import matplotlib.pyplot as plt
 
     plt.scatter(x, y)
+    plt.rcParams.update({'font.size': 17})
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     plt.title(plot_title)
+    plt.tight_layout()
     plt.savefig(filename)
     plt.close()
 

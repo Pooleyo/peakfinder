@@ -6,13 +6,15 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass, plotting_directions)
 
     filename = "ln_intensity_vs_gsqr_per_angstrom.png"
 
-    x_label = "$G^2$ (A$^-2$)"
+    x_label = "|$G^2$| ($\AA^-2$)"
 
     y_label = "ln(I) (arb.)"
 
-    plot_title = "Intensity vs. G$^2$"
+    plot_title = "ln(I) vs. |G$^2$|"
 
-    un.plot_matplotlib(gsqr, ln_intensity, filename, x_label, y_label, plot_title)
+    normalised_ln_I = ln_intensity - max(ln_intensity)
+
+    un.plot_matplotlib(gsqr, normalised_ln_I, filename, x_label, y_label, plot_title)
 
     direction_plot_filenames = ["parallel_x.png", "parallel_y.png", "parallel_z.png"]
 
