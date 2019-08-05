@@ -1,4 +1,4 @@
-def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mass, a_lattice, k_steps_find_centre, num_cores, timestep):
+def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name, N_atoms, mass, a_lattice, k_steps_find_centre, timestep, soh_command):
 
     import units as un
     import copy
@@ -31,7 +31,7 @@ def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name,
 
             input_file_location = un.determine_rough_soh_input_file_location(peak_str)
 
-            un.run_soh(input_file_location, num_cores)
+            un.run_soh(input_file_location, soh_command)
 
             un.move_soh_rough_output_to_peak_folder(peak_str, "find_centre_" + peak_str, source_name, timestep)
 

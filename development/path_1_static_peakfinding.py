@@ -29,7 +29,7 @@ def run():
                                                    ip.compression_ratio_undershoot,
                                                    ip.compression_ratio_overshoot, ip.source_name, ip.mass,
                                                    ip.a_lattice,
-                                                   ip.lineout_k_steps, ip.num_cores, ip.timestep)
+                                                   ip.lineout_k_steps, ip.timestep, ip.soh_command)
 
     compressed_pos_est, compressed_gsqr_est = apply_compression_ratio.run(current_pos_est, current_gsqr_est,
                                                                           compression_ratio)

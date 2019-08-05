@@ -1,4 +1,4 @@
-def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, k_steps, run_soh, num_cores, k_start, k_stop):
+def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, k_steps, run_soh, k_start, k_stop, soh_command):
 
     import units as un
     import logging as log
@@ -23,7 +23,7 @@ def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, k_step
 
             input_file_location = un.determine_accurate_soh_input_file_location(peak_str)
 
-            un.run_soh(input_file_location, num_cores)
+            un.run_soh(input_file_location, soh_command)
 
             un.move_soh_accurate_output_to_peak_folder(peak_str, source_name, timestep)
 

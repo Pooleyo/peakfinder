@@ -315,12 +315,12 @@ def write_soh_input_3DFT(source_name, file_destination, appended_string, mass, a
     return string_to_write  
 
     
-def run_soh(input_file_location, num_cores):
+def run_soh(input_file_location, soh_command):
 
     import subprocess
-    
-    shell_command = "mpiexec -np " + str(num_cores) + " sonOfHoward " + input_file_location + " >/dev/null"
-    
+
+    shell_command = soh_command + input_file_location + " >/dev/null"
+
     subprocess.call(shell_command, shell=True)
     
     log.debug("sonOfHoward called using input file at " + input_file_location)
@@ -545,7 +545,7 @@ def calc_debye_temperature_from_single_term_gruneisen_model(debye_temperautre_30
 
     #  See Will Murphy PHYSICAL REVIEW B 78, 014109 (2008) for the source of this equation.
 
-    exponent_term = - (gamma_uncompressed / (exponent * initial_volume)) * ((final_volume ** exponent) - (initial_volume ** exponent))
+    exponent_term = - (gamma_uncompressed / (exponent * (initial_volume ** exponent))) * ((final_volume ** exponent) - (initial_volume ** exponent))
 
     correction_factor = np.exp(exponent_term)
 
@@ -908,6 +908,42 @@ def bin_values(number_of_bins, list_to_bin):
     log.debug(histogram)
 
     return histogram
+
+def calc_maxwell_boltzmann_velocity_distribution(temperature, atom_mass, max_speed, number_of_speeds_to_calculate):
+
+    from scipy.constants import pi, k
+    import numpy as np
+
+    T = temperature
+    m = atom_mass * 1.66054e-27
+
+    def maxwell_boltzmann_speed_distribution_function(v):
+
+        p_v = 4 * pi * ((2 * pi * k * T / m) ** -1.5) * (v ** 2) * np.exp(- m * (v**2) / (2 * k * T))
+
+        return p_v
+
+    speed_list = np.linspace(0.0, max_speed, number_of_speeds_to_calculate)
+    map_iterable = map(maxwell_boltzmann_speed_distribution_function, speed_list)
+    maxwell_boltzmann_probability_list = list(map_iterable)
+
+    return maxwell_boltzmann_probability_list, speed_list
+
+
+def plot_velocity_distribution(maxwell_boltzmann_probabilities, maxwell_boltzmann_speeds, md_populations, md_speeds):
+
+    import matplotlib.pyplot as plt
+
+    #plt.plot(maxwell_boltzmann_speeds, maxwell_boltzmann_probabilities)
+    plt.scatter(md_speeds, md_populations)
+    plt.rcParams.update({'font.size': 17})
+    plt.title('MD Speed Distribution')
+    plt.xlabel('Speed ($\AA$ / ps)')
+    plt.ylabel('Frequency')
+    plt.tight_layout()
+    plt.savefig('speed_distribution_md_vs_boltzmann.png')
+    plt.close()
+    return
 
 
 def plot_histogram(histogram, filename, x_label, y_label, plot_title):

@@ -35,19 +35,19 @@ def run():
 
     compression_ratio = find_compression_ratio.run(ip.run_soh, ip.uncompressed_peak_positions, ip.compression_ratio_undershoot,
                                                    ip.compression_ratio_overshoot, ip.source_name, ip.mass, ip.a_lattice,
-                                                   ip.lineout_k_steps, ip.num_cores, ip.timestep)
+                                                   ip.lineout_k_steps, ip.timestep, ip.soh_command)
 
     fitted_pos_est = fit_to_peak_centres.run(ip.run_soh, raw_pos_est, current_pos_est, current_gsqr_est,
                                              compression_ratio, ip.source_name, ip.N_atoms,
                                              ip.mass, ip.a_lattice, ip.k_steps_find_centre,
-                                             ip.num_cores, ip.timestep)
+                                             ip.timestep, ip.soh_command)
 
     current_pos_est = fitted_pos_est
 
     k_start_accurate, k_stop_accurate = overstep_peak_edges.run(current_pos_est, ip.peak_edge_undershoot, ip.peak_edge_overshoot)
 
     use_dynamic_peakfinding_for_3DFT.run(current_pos_est, raw_pos_est, ip.source_name, ip.timestep, ip.mass, ip.a_lattice,
-                                        ip.k_steps, ip.run_soh, ip.num_cores, k_start_accurate, k_stop_accurate)
+                                        ip.k_steps, ip.run_soh, k_start_accurate, k_stop_accurate, ip.soh_command)
 
     peak_centre, integrated_intensity = calc_peak_intensities.run(raw_pos_est, ip.source_name, ip.timestep)
 

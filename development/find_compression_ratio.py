@@ -1,5 +1,5 @@
-def run(run_soh, lineout_directions, undershoot, overshoot, source, mass, a_lattice, lineout_k_steps, num_cores,
-        timestep):
+def run(run_soh, lineout_directions, undershoot, overshoot, source, mass, a_lattice, lineout_k_steps,
+        timestep, soh_command):
 
     import units as un
     import os
@@ -32,7 +32,7 @@ def run(run_soh, lineout_directions, undershoot, overshoot, source, mass, a_latt
 
             soh_location = un.determine_soh_compression_finding_input_file_location(direction_str[i])
 
-            un.run_soh(soh_location, num_cores)
+            un.run_soh(soh_location, soh_command)
 
             un.move_soh_output_to_lineout_folder(direction_str[i], source, timestep)
 

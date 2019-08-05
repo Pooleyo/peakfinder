@@ -7,13 +7,27 @@ def run(lammps_file_location, user_input_temperature, temperature_dimensionality
 
     md_temperature, velocity_squared = un.calc_MD_temperature(lammps_file_location, user_input_temperature, temperature_dimensionality, atomic_mass, velocity_columns)
 
-    histogram = un.bin_values(number_velocity_bins, np.sqrt(velocity_squared))
+    speed = np.sqrt(velocity_squared)
+
+    histogram = un.bin_values(number_velocity_bins, speed)
 
     populations = list(histogram[0])
+    total_population = float(sum(populations))
+
+    normalised_populations = [0] * len(populations)
+
+    for i, pop in enumerate(populations):
+
+        normalised_populations[i] = pop / total_population
+
     bins = list(histogram[1])
     del(bins[-1])
 
-    un.plot_matplotlib(bins, populations, "histogram_of_atom_velocity.png", "Velocity Magnitude (Angstrom/ps)", "Bin Population", "Histogram of Atom Velocities")
+    max_speed = np.max(speed)
+
+    boltzmann_probability_list, boltzmann_speed_list = un.calc_maxwell_boltzmann_velocity_distribution(md_temperature, atomic_mass, max_speed, 10)
+
+    un.plot_velocity_distribution(boltzmann_probability_list, boltzmann_speed_list, normalised_populations, bins)
 
     print "Temperature is: " + str(md_temperature) + " K"
 

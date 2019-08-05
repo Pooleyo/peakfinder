@@ -1,10 +1,11 @@
 path = "path_3_rotated_dynamic_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding",
 # "path_3_rotated_dynamic_peakfinding"
-run_soh = False
+run_soh = True
 make_peak_plots = False
 num_cores = 8
+soh_command = "mpiexec -np " + str(num_cores) + " sonOfHoward "
 
-N_atoms = [100, 100, 100]
+N_atoms = [20, 20, 20]
 
 # Input for "select_peak_positions"
 gsqr_max = 21
@@ -26,7 +27,7 @@ peak_edge_overshoot = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
 peak_edge_k_steps = 1e3 + 1
 
 # Input for "use_soh_for_3DFT"
-source_name = "nvt_10000.atom"
+source_name = "cu_300K_N20_uncompressed_111_10000.atom"
 timestep = "10000"  # Only used in moving soh output files.
 mass = 63.54999999999999715783  # In amu
 a_lattice = 3.6288  # In Angstroms
