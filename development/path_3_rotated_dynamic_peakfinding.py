@@ -26,7 +26,7 @@ def run():
 
         current_md_temperature = calc_md_temperature.run(ip.source_name, ip.temperature, ip.calculated_temperature_dimensionality, ip.mass, ip.velocity_columns, ip.number_velocity_bins)
 
-    raw_pos_est, raw_gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000)
+    raw_pos_est, raw_gsqr_est = select_peak_positions.run(ip.gsqr_max, ip.negative_k, ip.remove_000, ip.crystal_type)
 
     current_pos_est = raw_pos_est
 
@@ -46,8 +46,9 @@ def run():
 
     fitted_pos_est = fit_to_peak_centres.run(ip.run_soh, raw_pos_est, current_pos_est, current_gsqr_est,
                                              compression_ratio, ip.source_name, ip.N_atoms,
-                                             ip.mass, ip.a_lattice, ip.k_steps_find_centre,
-                                             ip.timestep, ip.soh_command)
+                                             ip.mass, ip.a_lattice, ip.k_steps_find_centre_1DFT,
+                                             ip.k_steps_find_centre_3DFT, ip.timestep, ip.soh_command,
+                                             ip.make_plots_peak_centre_fit)
 
     current_pos_est = fitted_pos_est
 
@@ -71,7 +72,7 @@ def run():
 
     plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, rotated_pos_est, current_md_temperature, ip.mass, ip.uncompressed_peak_positions)
 
-    if ip.make_peak_plots is True:
+    if ip.make_final_peak_plots is True:
 
         plot_peaks.run(peak_str, peak_centre, ip.source_name, ip.timestep)
 

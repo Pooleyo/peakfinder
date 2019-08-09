@@ -62,10 +62,32 @@ def remove_fcc_forbidden_reflections(old_pos):
         else:
             pass
             
-    log.debug(new_pos) 
-    
+    log.debug(new_pos)
+
     return new_pos
-    
+
+
+def remove_bcc_forbidden_reflections(old_pos):
+    # Removes pos_est values that are forbidden in bcc crystals. Diffraction is allowed at positions where h + k + l is even.
+
+    new_pos = []
+
+    for i in range(len(old_pos)):
+        if (old_pos[i][0] + old_pos[i][1] + old_pos[i][2]) % 2 == 1:
+
+            continue
+
+        elif (old_pos[i][0] + old_pos[i][1] + old_pos[i][2]) % 2 == 0:
+
+            new_pos.append(old_pos[i])
+
+        else:
+            pass
+
+    log.debug(new_pos)
+
+    return new_pos
+
 
 def remove_000(old_pos):
     
@@ -125,6 +147,7 @@ def make_lineout_directory():
 
     return
 
+
 def calc_k_offset_with_N_atoms(N_atoms):
 
     offset = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
@@ -132,6 +155,15 @@ def calc_k_offset_with_N_atoms(N_atoms):
     log.debug(offset)
 
     return offset
+
+
+def calc_dk_from_offset(offset, kx_steps, ky_steps, kz_steps):
+
+    import numpy as np
+
+    dk = [2 * offset[0]/(kx_steps - 1), 2 * offset[1]/(ky_steps - 1), 2 * offset[2]/(kz_steps - 1)]
+
+    return dk
   
     
 def convert_to_per_angstrom(element, a_lattice):
@@ -165,7 +197,7 @@ def find_simple_k_start(pos_element, offset):
     return k_start
     
 
-def find_k_stop(pos_element, offset):
+def find_simple_k_stop(pos_element, offset):
 
     k_stop = [pos_element[0] + offset[0], pos_element[1] + offset[1], pos_element[2] + offset[2]]
 
@@ -174,16 +206,32 @@ def find_k_stop(pos_element, offset):
     return k_stop
 
 
+def calc_lineout_k_start_stop(centre, under_shoot, over_shoot):
 
-def calc_lineout_k_start_stop(uncompressed_peak_centre, under_shoot, over_shoot):
-
-    k_start = [uncompressed_peak_centre[0] * under_shoot, uncompressed_peak_centre[1] * under_shoot, uncompressed_peak_centre[2] * under_shoot]
-    k_stop = [uncompressed_peak_centre[0] * over_shoot, uncompressed_peak_centre[1] * over_shoot, uncompressed_peak_centre[2] * over_shoot]
+    k_start = [centre[0] * under_shoot, centre[1] * under_shoot, centre[2] * under_shoot]
+    k_stop = [centre[0] * over_shoot, centre[1] * over_shoot, centre[2] * over_shoot]
 
     log.debug(k_start)
     log.debug(k_stop)
 
     return k_start, k_stop
+
+
+def calc_lineout_k_start_stop_along_xyz(k_start_3D, k_stop_3D, centre):
+
+    # Given two 3D 'k_start' and 'k_stop' points, this function will return three pairs of k_start values required to
+    # perform a 1DFT lineout through x, y, and z.
+
+    kx_start = list([k_start_3D[0], centre[1], centre[2]])
+    kx_stop = list([k_stop_3D[0], centre[1], centre[2]])
+
+    ky_start = list([centre[0], k_start_3D[1], centre[2]])
+    ky_stop = list([centre[0], k_stop_3D[1], centre[2]])
+
+    kz_start = list([centre[0], centre[1], k_start_3D[2]])
+    kz_stop = list([centre[0], centre[1], k_stop_3D[2]])
+
+    return kx_start, kx_stop, ky_start, ky_stop, kz_start, kz_stop
 
 
 def calc_peak_edge_k_start_stop(predicted_peak_centre, under_shoot, over_shoot):
@@ -233,11 +281,11 @@ def determine_accurate_soh_input_file_location(peak_str):
     return input_file_location
 
 
-def determine_rough_soh_input_file_location(peak_str):
+def determine_rough_soh_input_file_location(peak_str, filename):
     import os
 
     cwd = os.getcwd()
-    input_file_location = cwd + "/data/" + peak_str + "/find_centre_" + peak_str + ".in"
+    input_file_location = cwd + "/data/" + peak_str + "/" + filename
 
     log.debug(input_file_location)
 
@@ -395,11 +443,11 @@ def determine_accurate_soh_output_file_location(peak_str, source_name, timestep)
     return output_file_location
 
 
-def determine_rough_soh_output_file_location(peak_str, source_name, timestep):
+def determine_rough_soh_output_file_location(peak_str, source_name, timestep, appended_string):
     import os
 
     cwd = os.getcwd()
-    output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + ".find_centre_" + peak_str + ".ft"
+    output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + "." + appended_string + ".ft"
 
     log.debug(output_file_location)
 
@@ -1001,3 +1049,9 @@ def rotate_pos_est_using_rotation_matrices(pos_est, rot_x, rot_z):
 
     return rot_pos_est
 
+
+def triangulate_peak_centre_octant(soh_output):
+
+    kx, ky, kz, intensity = soh_output[0], soh_output[1], soh_output[2], soh_output[5]
+
+    return

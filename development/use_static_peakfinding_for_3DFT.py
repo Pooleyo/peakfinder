@@ -13,7 +13,7 @@ def run(current_pos_est, pos_est, source_name, timestep, mass, a_lattice, N_atom
 
         k_start = un.find_simple_k_start(pos, offset)
 
-        k_stop = un.find_k_stop(pos, offset)
+        k_stop = un.find_simple_k_stop(pos, offset)
 
         peak_str = un.make_peak_str(pos_est[i])
 

@@ -11,7 +11,7 @@ def run(pos_est, source_name, timestep, mass, a_lattice, N_atoms, k_steps, run_s
     
     for i in pos_est:
         k_start = un.find_simple_k_start(i, offset)
-        k_stop = un.find_k_stop(i, offset)
+        k_stop = un.find_simple_k_stop(i, offset)
         peak_str = un.make_peak_str(i)
         input_file_location = un.determine_accurate_soh_input_file_location(peak_str)
         un.write_soh_input_3DFT(source_name, input_file_location, peak_str, mass, a_lattice, k_steps, k_start, k_stop)

@@ -1,4 +1,4 @@
-def run(gsqr_max, negative_k, remove_000):
+def run(gsqr_max, negative_k, remove_000, crystal_type):
 
     import units as un
     import logging as log
@@ -8,9 +8,17 @@ def run(gsqr_max, negative_k, remove_000):
     print "Selecting peak positions..."
     
     pos_est = un.build_all_k_values(gsqr_max, negative_k)
-    pos_est = un.remove_fcc_forbidden_reflections(pos_est)
-    
+
+    if crystal_type == 'FCC':
+
+        pos_est = un.remove_fcc_forbidden_reflections(pos_est)
+
+    elif crystal_type == 'BCC':
+
+        pos_est = un.remove_bcc_forbidden_reflections(pos_est)
+
     if remove_000 == True:
+
         pos_est = un.remove_000(pos_est)
     
     gsqr_est = un.get_gsqr_values(pos_est)

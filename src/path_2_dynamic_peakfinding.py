@@ -36,7 +36,7 @@ def run():
 
     plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, pos_est, ip.temperature, ip.mass)
 
-    if ip.make_peak_plots is True:
+    if ip.make_final_peak_plots is True:
 
         plot_peaks.run(peak_str, peak_centre, ip.source_name, ip.timestep)
 
