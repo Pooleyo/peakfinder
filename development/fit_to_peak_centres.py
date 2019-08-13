@@ -77,13 +77,12 @@ def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name,
         k_max = un.find_point_of_max_height(soh_output)
 
         kx_centre = k_max[0]
-        """
+
         if plot is True:
 
-            un.plot_pygnuplot(soh_output[0], soh_output[3], soh_output_file_location, 'fit_peak_centre_1DFT_kx.png')
+            un.plot_pygnuplot(soh_output[0], soh_output[3], "./data/" + peak_str + "/find_centre_kx.png",
+                              "./data/" + peak_str + "/find_centre_kx.dat")
 
-            un.move_plot_output_to_peak_folder('fit_peak_centre_1DFT_kx', peak_str)
-        """
         appended_string = "find_centre_ky_" + peak_str
 
         soh_output_file_location = un.determine_rough_soh_output_file_location(peak_str, source_name, timestep,
@@ -94,6 +93,11 @@ def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name,
         k_max = un.find_point_of_max_height(soh_output)
 
         ky_centre = k_max[1]
+
+        if plot is True:
+
+            un.plot_pygnuplot(soh_output[1], soh_output[3], "./data/" + peak_str + "/find_centre_ky.png",
+                              "./data/" + peak_str + "/find_centre_ky.dat")
 
 
         appended_string = "find_centre_kz_" + peak_str
@@ -107,6 +111,11 @@ def run(run_soh, raw_pos_est, pos_est, gsqr_est, compression_ratio, source_name,
 
         kz_centre = k_max[2]
 
+
+        if plot is True:
+
+            un.plot_pygnuplot(soh_output[2], soh_output[3], "./data/" + peak_str + "/find_centre_kz.png",
+                              "./data/" + peak_str + "/find_centre_kz.dat")
 
         centre_guess_3DFT[i] = [kx_centre, ky_centre, kz_centre]
 

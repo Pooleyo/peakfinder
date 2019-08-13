@@ -1,10 +1,7 @@
 path = "path_2_dynamic_peakfinding"  # Choose from: "path_1_static_peakfinding", "path_2_dynamic_peakfinding", "path_3_rotated_dynamic_peakfinding"
 run_soh = True
-make_final_peak_plots = False
-#make_plots_peak_centre_fit = True # THIS DOESN
-
-
-# 'T WORK YET
+make_final_peak_plots = True
+make_plots_peak_centre_fit = True
 num_cores = 8
 soh_command = "mpiexec -np " + str(num_cores) + " sonOfHoward "
 
@@ -12,7 +9,7 @@ N_atoms = [5, 5, 5]
 
 # Input for "select_peak_positions"
 crystal_type = 'FCC'  # Choose between 'FCC' and 'BCC'
-gsqr_max = 11
+gsqr_max = 101
 negative_k = False
 remove_000 = False
 
@@ -23,8 +20,8 @@ compression_ratio_overshoot = 1.1
 lineout_k_steps = 1e3 + 1
 
 # Input for "fit_to_peak_centres"
-k_steps_find_centre_1DFT = 21
-k_steps_find_centre_3DFT = 21
+k_steps_find_centre_1DFT = 1001
+k_steps_find_centre_3DFT = 11
 
 # Input for "fit_to_peak_edges"
 peak_edge_undershoot = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
