@@ -9,7 +9,7 @@ N_atoms = [5, 5, 5]
 
 # Input for "select_peak_positions"
 crystal_type = 'FCC'  # Choose between 'FCC' and 'BCC'
-gsqr_max = 101
+gsqr_max = 11
 negative_k = False
 remove_000 = False
 
@@ -21,7 +21,7 @@ lineout_k_steps = 1e3 + 1
 
 # Input for "fit_to_peak_centres"
 k_steps_find_centre_1DFT = 1001
-k_steps_find_centre_3DFT = 11
+k_steps_find_centre_3DFT = 3
 
 # Input for "fit_to_peak_edges"
 peak_edge_undershoot = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
