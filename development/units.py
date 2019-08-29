@@ -669,12 +669,12 @@ def write_directional_temperatures_to_file(debye_temperature, temperature, filen
 
 def write_peak_intensities_to_file(pos_est, peak_centre, gsqr, integrated_intensity, ln_intensity, filename):
 
-    header_string = "peak_name peak_centre gsqr integrated_intensity ln_intensity\n"
+    header_string = "ln(I) G^2 peak peak_centre integrated_intensity\n"
 
     f = open(filename, "w")
     f.write(header_string)
     for i, pos in enumerate(pos_est):
-        f.write("%s %s %s %s %s\n" % (pos, peak_centre[i], gsqr[i], integrated_intensity[i], ln_intensity[i]))
+        f.write("%s %s %s %s %s\n" % (ln_intensity[i], gsqr[i], pos, peak_centre[i], integrated_intensity[i]))
     f.close()
 
     return
