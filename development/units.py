@@ -41,8 +41,6 @@ def build_all_k_values(gsqr_max, negative_k):
 
                     pass
     
-    log.debug(pos)
-                
     return pos
     
 
@@ -62,8 +60,6 @@ def remove_fcc_forbidden_reflections(old_pos):
         else:
             pass
             
-    log.debug(new_pos)
-
     return new_pos
 
 
@@ -84,8 +80,6 @@ def remove_bcc_forbidden_reflections(old_pos):
         else:
             pass
 
-    log.debug(new_pos)
-
     return new_pos
 
 
@@ -99,8 +93,6 @@ def remove_000(old_pos):
         if i != [0, 0, 0]:
             new_pos.append(i)
 
-    log.debug(new_pos)
-    
     return new_pos
     
     
@@ -115,8 +107,6 @@ def get_gsqr_values(pos):
         
         gsqr.append(current_gsqr)
         
-    log.debug(gsqr)
-    
     return gsqr
     
     
@@ -132,8 +122,6 @@ def build_datafile_structure(pos):
         if not os.path.exists("data/" + current_peak_str):
             os.makedirs("data/" + current_peak_str)
 
-    log.debug(peak_str)
-
     return peak_str
 
 
@@ -143,16 +131,12 @@ def make_lineout_directory():
 
     os.makedirs("data/lineouts")
 
-    log.debug("Made directory for lineout data.")
-
     return
 
 
 def calc_k_offset_with_N_atoms(N_atoms):
 
     offset = [1.0/N_atoms[0], 1.0/N_atoms[1], 1.0/N_atoms[2]]
-
-    log.debug(offset)
 
     return offset
 
@@ -174,16 +158,12 @@ def convert_to_per_angstrom(element, a_lattice):
     converted_element = element * ( (2 * np.pi) / a_lattice )
     converted_element = list(converted_element)
 
-    log.debug(converted_element)
-
     return converted_element
      
      
 def make_peak_str(i):
 
     peak_str = str(i[0]) + str(i[1]) + str(i[2])
-    
-    log.debug(peak_str)
     
     return peak_str
         
@@ -192,16 +172,12 @@ def find_simple_k_start(pos_element, offset):
 
     k_start = [pos_element[0] - offset[0], pos_element[1] - offset[1], pos_element[2] - offset[2]]
 
-    log.debug(k_start)
-
     return k_start
     
 
 def find_simple_k_stop(pos_element, offset):
 
     k_stop = [pos_element[0] + offset[0], pos_element[1] + offset[1], pos_element[2] + offset[2]]
-
-    log.debug(k_stop)
 
     return k_stop
 
@@ -210,9 +186,6 @@ def calc_lineout_k_start_stop(centre, under_shoot, over_shoot):
 
     k_start = [centre[0] * under_shoot, centre[1] * under_shoot, centre[2] * under_shoot]
     k_stop = [centre[0] * over_shoot, centre[1] * over_shoot, centre[2] * over_shoot]
-
-    log.debug(k_start)
-    log.debug(k_stop)
 
     return k_start, k_stop
 
@@ -239,9 +212,6 @@ def calc_peak_edge_k_start_stop(predicted_peak_centre, under_shoot, over_shoot):
     k_start = [predicted_peak_centre[0] - under_shoot, predicted_peak_centre[1] - under_shoot, predicted_peak_centre[2] - under_shoot]
     k_stop = [predicted_peak_centre[0] + over_shoot, predicted_peak_centre[1] + over_shoot, predicted_peak_centre[2] + over_shoot]
 
-    log.debug(k_start)
-    log.debug(k_stop)
-
     return k_start, k_stop
 
 
@@ -251,8 +221,6 @@ def determine_soh_compression_finding_input_file_location(direction):
 
     cwd = os.getcwd()
     input_file_location = cwd + "/data/lineouts/" + direction + "_lineout.in"
-
-    log.debug(input_file_location)
 
     return input_file_location
 
@@ -264,8 +232,6 @@ def determine_soh_edge_finding_input_file_location(direction, peak_str):
     cwd = os.getcwd()
     input_file_location = cwd + "/data/" + peak_str + "/" + direction + "_lineout.in"
 
-    log.debug(input_file_location)
-
     return input_file_location
 
 
@@ -276,8 +242,6 @@ def determine_accurate_soh_input_file_location(peak_str):
     cwd = os.getcwd()
     input_file_location = cwd + "/data/" + peak_str + "/" + peak_str + ".in"
     
-    log.debug(input_file_location)
-    
     return input_file_location
 
 
@@ -287,8 +251,6 @@ def determine_rough_soh_input_file_location(peak_str, filename):
     cwd = os.getcwd()
     input_file_location = cwd + "/data/" + peak_str + "/" + filename
 
-    log.debug(input_file_location)
-
     return input_file_location
 
 
@@ -297,8 +259,6 @@ def determine_rough_lineout_soh_input_file_location(peak_str):
 
     cwd = os.getcwd()
     input_file_location = cwd + "/data/" + peak_str + "/find_edge_" + peak_str + ".in"
-
-    log.debug(input_file_location)
 
     return input_file_location
 
@@ -326,8 +286,6 @@ def write_soh_input_1DFT(source_name, file_destination, appended_string, mass, a
     f = open(file_destination, "w")
     f.write(string_to_write)
     f.close()
-
-    log.debug(string_to_write)
 
     return string_to_write
 
@@ -358,9 +316,7 @@ def write_soh_input_3DFT(source_name, file_destination, appended_string, mass, a
     f.write(string_to_write)
     f.close()
     
-    log.debug(string_to_write)
-    
-    return string_to_write  
+    return string_to_write
 
     
 def run_soh(input_file_location, soh_command):
@@ -370,8 +326,6 @@ def run_soh(input_file_location, soh_command):
     shell_command = soh_command + input_file_location + " >/dev/null"
 
     subprocess.call(shell_command, shell=True)
-    
-    log.debug("sonOfHoward called using input file at " + input_file_location)
     
     return
     
@@ -385,8 +339,6 @@ def move_soh_accurate_output_to_peak_folder(peak_str, source_name, timestep):
     
     shutil.move(origin, destination)
     
-    log.debug(origin + " moved to " + destination)
-    
     return
 
 
@@ -399,8 +351,6 @@ def move_soh_rough_output_to_peak_folder(peak_str, appended_string, source_name,
 
     shutil.move(origin, destination)
 
-    log.debug(origin + " moved to " + destination)
-
     return
 
 
@@ -411,8 +361,6 @@ def move_soh_output_to_lineout_folder(lineout_str, source_name, timestep):
     destination = "./data/lineouts/"
 
     shutil.move(origin, destination)
-
-    log.debug(origin + " moved to " + destination)
 
     return
 
@@ -426,8 +374,6 @@ def move_plot_output_to_peak_folder(direction, peak_str):
 
     shutil.move(origin, destination)
 
-    log.debug(origin + " moved to " + destination)
-
     return
     
     
@@ -438,8 +384,6 @@ def determine_accurate_soh_output_file_location(peak_str, source_name, timestep)
     cwd = os.getcwd()
     output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + "." + peak_str + ".ft"
     
-    log.debug(output_file_location)
-    
     return output_file_location
 
 
@@ -448,8 +392,6 @@ def determine_rough_soh_output_file_location(peak_str, source_name, timestep, ap
 
     cwd = os.getcwd()
     output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + "." + appended_string + ".ft"
-
-    log.debug(output_file_location)
 
     return output_file_location
 
@@ -460,8 +402,6 @@ def determine_soh_1DFT_output_file_location(direction_str, source_name, timestep
     cwd = os.getcwd()
     output_file_location = cwd + "/data/lineouts/" + source_name + "." + timestep + ".lineout_" + direction_str + ".ft"
 
-    log.debug(output_file_location)
-
     return output_file_location
 
 
@@ -471,8 +411,6 @@ def determine_soh_edge_finding_output_file_location(peak_str, direction_str, sou
     cwd = os.getcwd()
     output_file_location = cwd + "/data/" + peak_str + "/" + source_name + "." + timestep + "." + peak_str + "_find_edges_" + direction_str + ".ft"
 
-    log.debug(output_file_location)
-
     return output_file_location
 
 
@@ -481,8 +419,6 @@ def determine_edge_finding_soh_output_file_location(direction_str, source_name, 
 
     cwd = os.getcwd()
     output_file_location = cwd + "/data/lineouts/" + source_name + "." + timestep + ".lineout_" + direction_str + ".ft"
-
-    log.debug(output_file_location)
 
     return output_file_location
 
@@ -502,8 +438,6 @@ def read_from_soh_output(filename):
 
     soh_output = [kx, ky, kz, intensity]
 
-    log.debug(soh_output)
-
     return soh_output
     
     
@@ -515,8 +449,6 @@ def find_point_of_max_height(soh_output):
 
     point_of_max_height = [soh_output[0][max_height_index], soh_output[1][max_height_index], soh_output[2][max_height_index]]
 
-    log.debug(point_of_max_height)
-    
     return point_of_max_height
     
 
@@ -528,8 +460,6 @@ def calc_dvol(soh_output):
     dkz = ( max(soh_output[2]) - min(soh_output[2]) ) / (k_step - 1)
     dvol = dkx * dky * dkz
 
-    log.debug(dvol)
-    
     return dvol
 
 
@@ -538,8 +468,6 @@ def calc_integrated_intensity(soh_output, dvol):
     intensity_sum = sum(soh_output[3])
     integrated_intensity = dvol * intensity_sum
 
-    log.debug(integrated_intensity)
-    
     return integrated_intensity
     
 
@@ -549,8 +477,6 @@ def get_ln_intensity(intensity):
 
     ln_intensity = np.log(intensity)
     
-    log.debug(ln_intensity)
-
     return ln_intensity
     
     
@@ -559,8 +485,6 @@ def calc_line_slope_and_constant(x, y):
     import numpy as np
     
     slope, constant = np.polyfit(x, y, 1, cov=False)
-
-    log.debug("slope = " + str(slope) + "\nconstant = " + str(constant))
 
     return slope, constant
     
@@ -571,8 +495,6 @@ def calc_debye_waller_constant(m):
 
     debye_waller_constant = (10 ** 20) * 3 * (h ** 2) * N_A / (4 * (pi ** 2) * m * (10 ** -3) * k)
 
-    log.debug(debye_waller_constant)
-
     return debye_waller_constant
             
         
@@ -581,8 +503,6 @@ def calc_debye_temperature_xrd(temperature, slope, debye_waller_constant):
     import numpy as np
 
     debye_temperature = np.sqrt(debye_waller_constant * temperature * abs( 1.0 / slope ))
-
-    log.debug(debye_temperature)
 
     return debye_temperature
 
@@ -598,8 +518,6 @@ def calc_debye_temperature_from_single_term_gruneisen_model(debye_temperautre_30
     correction_factor = np.exp(exponent_term)
 
     model_debye_temperature = debye_temperautre_300K_uncompressed * correction_factor
-
-    log.debug(model_debye_temperature)
 
     return model_debye_temperature
 
@@ -632,8 +550,6 @@ def calc_debye_temperature_from_triple_term_gruneisen_model(debye_temperature_30
 
     model_debye_temperature = debye_temperature_300K_uncompressed * correction_factor
 
-    log.debug(model_debye_temperature)
-
     return model_debye_temperature
 
 
@@ -641,16 +557,12 @@ def calc_volume_lattice_units(a_lattice, compression_factors):
 
     volume = (a_lattice ** 3) * (compression_factors[0] * compression_factors[1] * compression_factors[2])
 
-    log.debug(volume)
-
     return volume
 
 
 def calc_temperature_xrd(debye_temperature, slope, debye_waller_constant):
 
     temperature = (debye_temperature ** 2) * abs(slope) * (1.0 / debye_waller_constant)
-
-    log.debug(temperature)
 
     return temperature
 
@@ -740,8 +652,6 @@ def write_temperatures_to_file(debye_temperature, temperature, model_debye_tempe
     )
     f.close()
 
-    log.debug(filename_temperatures)
-
     return
 
 
@@ -753,8 +663,6 @@ def write_directional_temperatures_to_file(debye_temperature, temperature, filen
         "Temperature from MD\t\t\t\t\t\t" + str(temperature)
     )
     f.close()
-
-    log.debug(filename_temperatures)
 
     return
 
@@ -768,8 +676,6 @@ def write_peak_intensities_to_file(pos_est, peak_centre, gsqr, integrated_intens
     for i, pos in enumerate(pos_est):
         f.write("%s %s %s %s %s\n" % (pos, peak_centre[i], gsqr[i], integrated_intensity[i], ln_intensity[i]))
     f.close()
-
-    log.debug(filename)
 
     return
 
@@ -811,16 +717,12 @@ def find_if_vectors_parallel(v_1, v_2):
 
             result = False
 
-    log.debug(result)
-
     return result
 
 
 def calc_compression_ratio(compressed_k, uncompressed_k):
 
     compression_ratio = compressed_k/uncompressed_k
-
-    log.debug(compression_ratio)
 
     return compression_ratio
 
@@ -944,8 +846,6 @@ def calc_MD_temperature(lammps_file_location, user_input_temperature, temperatur
 
         velocity_squared = [0]
 
-    log.debug(MD_temperature)
-
     return MD_temperature, velocity_squared
 
 
@@ -954,8 +854,6 @@ def bin_values(number_of_bins, list_to_bin):
     import numpy as np
 
     histogram = np.histogram(list_to_bin, number_of_bins)
-
-    log.debug(histogram)
 
     return histogram
 

@@ -4,7 +4,7 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass, plotting_directions)
 
     print "Plotting intensity vs. G^2 for all peaks, and in kx, ky, kz..."
 
-    filename = "ln_intensity_vs_gsqr_per_angstrom.png"
+    filename = "data/ln_intensity_vs_gsqr_per_angstrom.png"
 
     x_label = "|$G^2$| ($\AA^-2$)"
 
@@ -16,9 +16,9 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass, plotting_directions)
 
     un.plot_matplotlib(gsqr, normalised_ln_I, filename, x_label, y_label, plot_title)
 
-    direction_plot_filenames = ["parallel_x.png", "parallel_y.png", "parallel_z.png"]
+    direction_plot_filenames = ["data/parallel_x.png", "data/parallel_y.png", "data/parallel_z.png"]
 
-    direction_result_filenames = ["parallel_x.pkfd", "parallel_y.pkfd", "parallel_z.pkfd"]
+    direction_result_filenames = ["data/parallel_x.pkfd", "data/parallel_y.pkfd", "data/parallel_z.pkfd"]
 
     for i, direction in enumerate(plotting_directions):
 
