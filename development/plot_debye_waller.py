@@ -6,15 +6,17 @@ def run(gsqr, ln_intensity, raw_pos_est, temperature, mass, plotting_directions)
 
     filename = "data/ln_intensity_vs_gsqr_per_angstrom.png"
 
-    x_label = "|$G^2$| ($\AA^-2$)"
+    x_label = "$|G^2| (\AA^{-2})$"
 
-    y_label = "ln(I) (arb.)"
+    y_label = "$ln(I)$ (arb.)"
 
-    plot_title = "ln(I) vs. |G$^2$|"
+    plot_title = "$ln(I)$ vs. $|G^2|$"
 
     normalised_ln_I = ln_intensity - max(ln_intensity)
 
-    un.plot_matplotlib(gsqr, normalised_ln_I, filename, x_label, y_label, plot_title)
+    fit_slope, fit_constant = un.calc_line_slope_and_constant(gsqr, normalised_ln_I)
+
+    un.plot_debye_waller(gsqr, normalised_ln_I, filename, x_label, y_label, plot_title, fit_slope, fit_constant)
 
     direction_plot_filenames = ["data/parallel_x.png", "data/parallel_y.png", "data/parallel_z.png"]
 

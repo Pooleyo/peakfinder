@@ -582,6 +582,26 @@ def plot_matplotlib(x, y, filename, x_label, y_label, plot_title):
 
     return
 
+def plot_debye_waller(x, y, filename, x_label, y_label, plot_title, slope, constant):
+
+    import matplotlib.pyplot as plt
+
+    line_x = [0.0, max(x)]
+    line_y = [constant, constant + slope*max(x)]
+
+    plt.scatter(x, y, label='peak intensities')
+    plt.plot(line_x, line_y, label='line fit')
+    plt.rcParams.update({'font.size': 16})
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.title(plot_title)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(filename)
+    plt.close()
+
+    return
+
 
 def plot_pyqtgraph(x, y, filename):
 
