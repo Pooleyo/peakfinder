@@ -54,3 +54,10 @@ single_term_model_exponent_values = [1.0, 1.085, 1.33]
 
 triple_term_model_gamma_0_values = [2.04]
 triple_term_model_constants = [[-3.296, 10.493, -19.264]]
+
+# These terms are for a polynomial fit of the Debye temperature under compression, derived from MD. Note that these
+# models are absolute values of theta_D; they do not calculate theta_D / theta_0 and so the input parameter
+# 'uncompressed_debye_temperature' is not used in these models.
+polynomial_coeff = [-940.77071405, 4409.41804026, -6459.1848251, 3300.71717034] # The list starts at the highest degree term in the polynomial.
+# Cu MD model -> [-940.77071405, 4409.41804026, -6459.1848251, 3300.71717034]
+# Nb MD model -> [-769547.13166358, 3387086.89639316, -5920835.76544171, 5134767.61272078, -2208100.44517431, 376887.88877453]

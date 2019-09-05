@@ -666,9 +666,9 @@ def write_temperatures_to_file(debye_temperature, temperature, model_debye_tempe
 
     f = open(filename_temperatures, "w")
     f.write(
-        "XRD Debye temperature (using slope of ln(I) vs. G^2 and temperature calculated from MD)\t\t\t\t" + str(debye_temperature) + "\n"
-        "Debye temperature as modelled, using calculated compression\t\t\t\t\t\t\t\t\t\t\t" + str(model_debye_temperatures) + "\n"
-        "Temperature (using slope of ln(I) vs. G^2 and 4 models of Debye temperature)\t\t\t\t\t\t" + str(temperature)
+        "XRD Debye temperature (using slope of ln(I) vs. G^2 and temperature calculated from MD)\t\t" + str(debye_temperature) + "\n"
+        "Debye temperature as modelled, using calculated compression\t\t" + str(model_debye_temperatures) + "\n"
+        "Temperature (using slope of ln(I) vs. G^2 and models of Debye temperature)\t\t" + str(temperature)
     )
     f.close()
 
@@ -973,3 +973,24 @@ def triangulate_peak_centre_octant(soh_output):
     kx, ky, kz, intensity = soh_output[0], soh_output[1], soh_output[2], soh_output[5]
 
     return
+
+
+def calc_debye_temp_from_MD_model(coeff, volume_ratio):
+
+    if len(coeff) == 4:
+
+        debye_temperature = (coeff[0] * (volume_ratio ** 3)) + (coeff[1] * (volume_ratio ** 2)) \
+                            + (coeff[2] * (volume_ratio)) + coeff[3]
+
+    elif len(coeff) == 6:
+
+        debye_temperature = (coeff[0] * (volume_ratio ** 5)) + (coeff[1] * (volume_ratio ** 4)) \
+                            + (coeff[2] * (volume_ratio ** 3)) + (coeff[3] * (volume_ratio ** 2)) \
+                            + (coeff[4] * (volume_ratio)) + coeff[5]
+
+    else:
+
+        print "############### MD Debye Model did not return a value; returning a value of 1.0 ###################"
+        debye_temperature = 1.0
+
+    return debye_temperature

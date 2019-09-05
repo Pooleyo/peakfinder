@@ -1,4 +1,4 @@
-def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye_temperature, single_term_model_gamma_0_values, single_term_model_q_values, triple_term_model_gamma_0_values, triple_term_constant_values, compression_ratio):
+def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye_temperature, single_term_model_gamma_0_values, single_term_model_q_values, triple_term_model_gamma_0_values, triple_term_constant_values, compression_ratio, MD_debye_temperature_coefficients):
 
     import units as un
     import logging as log
@@ -33,7 +33,13 @@ def run(peak_centre, intensity, a_lattice, mass, temperature, uncompressed_debye
 
     final_volume = un.calc_volume_lattice_units(a_lattice, compression_factors)
 
+    volume_ratio = final_volume / initial_volume
+
     model_debye_temperatures = []
+
+    MD_debye_temperature = un.calc_debye_temp_from_MD_model(MD_debye_temperature_coefficients, volume_ratio)
+
+    model_debye_temperatures.append(MD_debye_temperature)
 
     for i in range(len(single_term_model_gamma_0_values)):
 
