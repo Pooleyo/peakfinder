@@ -50,7 +50,7 @@ def run():
 
     peak_centre, integrated_intensity = calc_peak_intensities.run(raw_pos_est, ip.source_name, ip.timestep)
 
-    debye_temperature, temperature, model_debye_temperatures, gsqr_per_angstrom, ln_intensity = calc_debye_waller.run(
+    debye_temperature, temperature, model_debye_temperatures, gsqr_per_angstrom, ln_intensity, slope = calc_debye_waller.run(
         peak_centre, integrated_intensity, ip.a_lattice, ip.mass,
         current_md_temperature, ip.uncompressed_debye_temperature,
         ip.single_term_model_gamma_0_values,
@@ -58,7 +58,8 @@ def run():
         ip.triple_term_model_gamma_0_values,
         ip.triple_term_model_constants, compression_ratio, ip.polynomial_coeff)
 
-    write_output_files.run(debye_temperature, temperature, model_debye_temperatures, raw_pos_est, peak_centre, gsqr_per_angstrom, integrated_intensity, ln_intensity)
+    write_output_files.run(debye_temperature, temperature, model_debye_temperatures, raw_pos_est, peak_centre,
+                           gsqr_per_angstrom, integrated_intensity, ln_intensity, slope)
 
     plot_debye_waller.run(gsqr_per_angstrom, ln_intensity, raw_pos_est, current_md_temperature, ip.mass, ip.uncompressed_peak_positions)
 
