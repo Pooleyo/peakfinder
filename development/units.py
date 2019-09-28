@@ -878,32 +878,37 @@ def bin_values(number_of_bins, list_to_bin):
 
     return histogram
 
-def calc_maxwell_boltzmann_velocity_distribution(temperature, atom_mass, max_speed, number_of_speeds_to_calculate):
+def calc_maxwell_boltzmann_velocity_distribution(max_speed, number_of_speeds_to_calculate, frequency):
 
-    from scipy.constants import pi, k
     import numpy as np
+    from scipy.optimize import curve_fit
 
-    T = temperature
-    m = atom_mass * 1.66054e-27
+    def maxwell_boltzmann_probability_distribution_function(x, a):
 
-    def maxwell_boltzmann_speed_distribution_function(v):
+        p = np.sqrt(2/np.pi) * (x ** 2) * np.exp((-x ** 2)/(2 * a ** 2)) * (1.0/a ** 3)
 
-        p_v = 4 * pi * ((2 * pi * k * T / m) ** -1.5) * (v ** 2) * np.exp(- m * (v**2) / (2 * k * T))
+        return p
 
-        return p_v
+    input_speed_list = np.linspace(0.0, max_speed, number_of_speeds_to_calculate)
 
-    speed_list = np.linspace(0.0, max_speed, number_of_speeds_to_calculate)
-    map_iterable = map(maxwell_boltzmann_speed_distribution_function, speed_list)
-    maxwell_boltzmann_probability_list = list(map_iterable)
+    p0 = curve_fit(maxwell_boltzmann_probability_distribution_function, input_speed_list, frequency)
 
-    return maxwell_boltzmann_probability_list, speed_list
+    p_mb = []
+
+    longer_speed_list = np.linspace(0.0, max_speed, 100)
+
+    for s in longer_speed_list:
+
+        p_mb.append(maxwell_boltzmann_probability_distribution_function(s, p0[0]))
+
+    return p_mb, longer_speed_list
 
 
 def plot_velocity_distribution(maxwell_boltzmann_probabilities, maxwell_boltzmann_speeds, md_populations, md_speeds):
 
     import matplotlib.pyplot as plt
 
-    #plt.plot(maxwell_boltzmann_speeds, maxwell_boltzmann_probabilities)
+    plt.plot(maxwell_boltzmann_speeds, maxwell_boltzmann_probabilities)
     plt.scatter(md_speeds, md_populations)
     plt.rcParams.update({'font.size': 17})
     plt.title('MD Speed Distribution')

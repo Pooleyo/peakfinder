@@ -25,7 +25,7 @@ def run(lammps_file_location, user_input_temperature, temperature_dimensionality
 
     max_speed = np.max(speed)
 
-    boltzmann_probability_list, boltzmann_speed_list = un.calc_maxwell_boltzmann_velocity_distribution(md_temperature, atomic_mass, max_speed, 10)
+    boltzmann_probability_list, boltzmann_speed_list = un.calc_maxwell_boltzmann_velocity_distribution(max_speed, number_velocity_bins, normalised_populations)
 
     un.plot_velocity_distribution(boltzmann_probability_list, boltzmann_speed_list, normalised_populations, bins)
 
